@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>CarGo</title>
+
+    <meta http-equiv = "Content-Type" content = "text/html; charset = utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+<!-- CSS Section -->
+    <link rel = "stylesheet" type = "text/css" href = "resources/css/reset.css" />
+    <link rel = "stylesheet" type = "text/css" href = "resources/css/grid.css" />
+    <link rel = "stylesheet" type = "text/css" href = "resources/css/style.css" />
+    <link rel = "stylesheet" type = "text/css" href = "vendors/css/ionicons.min.css" />
+
+<!-- JS Section -->
+
+</head>
+<body>
+    <header class="screen">
+        <div class="verticalcenter">
+            <h1>CarGo</h1>
+            <h2>a better way to get around!</h2>
+            <a href="#" class="button full-button">Sign up</a>
+            <p>We only take people to and from places. We never run a cab service, just a new way of moving people around with cars.</p>
+        </div>
+    </header>
+    <section class="information-screen screen">
+        <div class="verticalcenter">
+            <p> We only charge your card after your journey is completed successfully.
+            </p>
+            <p> We do not store or share any of your personal details or data with anyone, ever.
+            </p>
+            <p> This is only a security check for you and our members.
+            </p>
+            <a href="#" class="button full-button">Proceed</a>
+        </div>
+    </section>
+    <section class="signup-carddetails screen">
+        <div class="verticalcenter">
+            <form class="input-form">
+                <div class="input-row">
+                    <span class="input-element">
+                        <input type="text" name="cardno" id="cardno" placeholder="Card Number">
+                        <label for="cardno">Card Number</label>
+                    </span>
+                </div>
+                <div class="input-row">
+                    <span class="input-element small-input">
+                        <input type="text" name="startdate" id="startdate" placeholder="Start Date">
+                        <label for="cardno">Start date</label>
+                    </span>
+                    <span class="input-element small-input">
+                        <input type="text" name="enddate" id="enddate" placeholder="End Date">
+                        <label for="cardno">End date</label>
+                    </span>
+                </div>
+                <div class="input-row">
+                    <span class="input-element">
+                        <input type="text" name="cvc" id="cvc" placeholder="CVC">
+                        <label for="cardno">CVC</label>
+                    </span>
+                </div>
+                <a href="#" class="button full-button">Save</a>
+            </form>
+        </div>
+    </section>
+    <section class="signup-type screen">
+        <div class="verticalcenter">
+            <a href="#" class="button full-button">Join CarClub</a>
+            <a href="#" class="button ghost-button">Book a cab</a>
+        </div>
+    </section>
+    <section class="registration-car-details screen">
+        <div class="verticalcenter">
+            <form class="car-details-input-form">
+                <p><i class="ion-card icon-not-yet"></i> Drivers license</p>
+                <a href="#" class="button camera-button">
+                    <i class="ion-android-camera"></i>
+<!--
+                    <span class="id-image">
+                        <img src="resources/images/background002.jpg">
+                    </span>
+-->
+                </a>
+                <div class="input-row">
+                    <span class="input-element">
+                        <input type="text" name="carreg" id="carreg" placeholder="Car Registration Number">
+                        <label for="carreg">Car Registration Number</label>
+                    </span>
+                </div>
+                <div class="input-row">
+                    <span class="input-element">
+                        <input type="text" name="policynumber" id="policynumber" placeholder="Policy Number">
+                        <label for="policynumber">Policy Number</label>
+                    </span>
+                </div>
+                <p>Are you insured for more than one driver?</p>
+                <div class="input-row small-buttons">
+                    <a href="#" class="button full-button small-button first">Yes</a><a href="#" class="button ghost-button small-button last">No</a>
+                </div>
+                <a href="#" class="button full-button">Save</a>
+            </form>
+        </div>
+    </section>
+    <section class="location-screen screen">
+        <div class="verticalcenter">
+            <form class="car-details-input-form">
+                <div class="input-row">
+                    <span class="input-element">
+                        <input type="text" name="pickup" id="pickup" placeholder="Pick up location">
+                        <label for="pickup">Pick up location</label>
+                    </span>
+                </div>
+                <div class="input-row">
+                    <span class="input-element">
+                        <input type="text" name="dropoff" id="dropoff" placeholder="Drop off location">
+                        <label for="dropoff">Drop off location</label>
+                    </span>
+                </div>
+                <p>Fare:</p>
+                <h2>£XX.XX</h2>
+                <a href="#" class="button full-button">Save</a>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

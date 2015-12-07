@@ -1,0 +1,281 @@
+/*----- Required Fonts -----*/
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,100&subset=latin,latin-ext);
+
+/*----- Basic setup -----*/
+html {
+    background-color: #fff;
+    color: #212121;
+    font-family: 'Lato', 'Arial', sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+    text-rendering: optimizeLegibility;
+}
+
+.icon-not-yet {
+    color: #505050;
+}
+
+.icon-ok {
+    color: #FF5722;
+}
+
+.screen {
+    display: block;
+    height: 100vh;
+}
+
+.verticalcenter {
+    position:relative;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.button {
+    display: block;
+    margin: 30px auto;
+    border-radius: 2px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.camera-button:link,
+.camera-button:visited {
+    display: block;
+    width: 90%;
+    margin: 20px auto;
+    font-size: 400%;
+    text-align: center;
+    border: 2px solid #505050;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #505050;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+.camera-button:hover,
+.camera-button:active {
+    color: #FF5722;
+    border-color: #FF5722;
+}
+
+.camera-button i {
+    display: block;
+    margin: 20px auto;
+}
+
+
+.full-button:link,
+.full-button:visited,
+.ghost-button:link,
+.ghost-button:visited {
+    width: 50%;
+    height: 50px;
+    font-size: 110%;
+    color: #fff;
+    background-color: #FF5722;
+    border: 1px solid #FF5722;
+    line-height: 50px;
+    font-weight: 400;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.full-button:active,
+.full-button:hover {
+    background-color: #ff3e00;
+    color: #fff;
+}
+
+.ghost-button:link,
+.ghost-button:visited {
+    background-color: rgba(0,0,0,0.25);
+    color: #FF5722;
+}
+
+.ghost-button:active,
+.ghost-button:hover {
+    background-color: rgba(0,0,0,0.5);
+}
+
+.ghost-button.small-button,
+.full-button.small-button {
+    display: inline-block;
+    width: 50px;
+    margin: 0;
+    padding: 0;
+}
+
+.ghost-button.small-button.first,
+.full-button.small-button.first {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.ghost-button.small-button.last,
+.full-button.small-button.last {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    letter-spacing: 2px;
+    word-spacing: 3px;
+}
+
+/*----- Landing page -----*/
+header {
+    display: block;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(32, 32, 32, 0.90), rgba(80, 80, 80, 0.8)), url(../images/background001.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+header h1 {
+    font-size: 200%;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 30px 0;
+}
+
+header h2 {
+    font-size: 100%;
+    color: #e2e2e2;
+    width: 100%;
+    text-align: center;
+}
+
+header p {
+    display: block;
+    width: 90%;
+    font-size: 100%;
+    color: #fff;
+    line-height: 125%;
+    padding: 0 3%;
+}
+
+/*----- Signup Information Screen -----*/
+
+.screen p {
+    margin: 15px auto;
+    display: block;
+    width: 90%;
+    font-size: 100%;
+    line-height: 125%;
+    padding: 0 3%;
+}
+
+/*----- Signup Screen Input screen -----*/
+
+.input-row {
+    width: 90%;
+    margin: 20px auto;
+}
+
+.input-element {
+    display: block;
+    height: 50px;
+    position: relative;
+    border: 1px solid #505050;
+}
+
+.input-element.small-input {
+    display: inline-block;
+    width: 45%;
+    margin: 0 5px;
+    vertical-align: top;
+}
+
+.input-element input {
+    border: none;
+    width: 100%;
+    height: 50px;
+    font-size: 100%;
+    font-weight: 100;
+    box-sizing: border-box;
+    padding: 0 10px;
+    outline: none;
+    transition: height 0.3s;
+}
+
+.input-element input[placeholder]::-webkit-input-placeholder {
+          transition: color 0.3s ease-in;
+  -webkit-transition: color 0.3s ease-in;
+     -moz-transition: color 0.3s ease-in;
+}
+
+.input-element label {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    font-size: 60%;
+    line-height: 15px;
+    background-color: #505050;
+    color: #fff;
+    overflow: hidden;
+    padding: 0 10px;
+    height: 0;
+    transition: height 0.3s;
+}
+
+.input-element input:focus {
+    height: 35px;
+}
+
+.input-element input:focus::-webkit-input-placeholder { color:transparent; }
+.input-element input:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
+.input-element input:focus::-moz-placeholder { color:transparent; } /* FF 19+ */
+.input-element input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
+
+.input-element input:focus ~ label {
+    height: 15px;
+}
+
+/*----- Type Selection Screen -----*/
+
+.signup-type {
+    display: block;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(32, 32, 32, 0.90), rgba(80, 80, 80, 0.8)), url(../images/background003.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+/*----- Car Information Input Screen -----*/
+
+.id-image {
+    display: block;
+    width: 100%;
+}
+
+.id-image img {
+    display: block;
+    height: 100px;
+    width: auto;
+    margin: 5px auto;
+    border-radius: 5px;
+    border: 1px solid #505050;
+}
+
+.registration-car-details .small-buttons {
+    text-align: right;
+    margin-top: 0;
+}
+
+/*----- Pick up/Drop off Location & Fare Screen -----*/
+
+.location-screen p {
+    margin-top: 50px;
+}
+
+.location-screen h2 {
+    font-size: 250%;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 50px;
+}
