@@ -1,5 +1,9 @@
 /*----- Required Fonts -----*/
 @import url(https://fonts.googleapis.com/css?family=Lato:400,300,100&subset=latin,latin-ext);
+@font-face {
+    font-family: ionicons;
+    src: url(vendors/fonts/ionicons.woff)
+}
 
 /*----- Basic setup -----*/
 html {
@@ -19,9 +23,18 @@ html {
     color: #FF5722;
 }
 
+.icon-big {
+    display: block;
+    font-size: 400%;
+    text-align: center;
+    margin: 0 auto 30px;
+    color: #fff;
+}
+
 .screen {
     display: block;
     height: 100vh;
+    margin: 0;
 }
 
 .verticalcenter {
@@ -44,7 +57,6 @@ html {
     display: block;
     width: 90%;
     margin: 20px auto;
-    font-size: 400%;
     text-align: center;
     border: 2px solid #505050;
     border-radius: 5px;
@@ -62,8 +74,19 @@ html {
 .camera-button i {
     display: block;
     margin: 20px auto;
+    font-size: 400%;
 }
 
+.camera-button p {
+    font-size: 50%;
+    font-weight: 400;
+}
+
+.camera-button p > i {
+    display: inline-block;
+    font-size: 100%;
+    font-weight: 400;
+}
 
 .full-button:link,
 .full-button:visited,
@@ -118,7 +141,7 @@ html {
 }
 
 h1, h2, h3, h4, h5, h6, p {
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     word-spacing: 3px;
 }
 
@@ -142,7 +165,7 @@ header h1 {
 
 header h2 {
     font-size: 100%;
-    color: #e2e2e2;
+    color: #fff;
     width: 100%;
     text-align: center;
 }
@@ -184,8 +207,14 @@ header p {
 .input-element.small-input {
     display: inline-block;
     width: 45%;
-    margin: 0 5px;
+    margin: 0;
     vertical-align: top;
+    text-align: right;
+}
+
+.input-element.small-input.right-align {
+    background-color: red;
+    float: right;
 }
 
 .input-element input {
@@ -262,9 +291,58 @@ header p {
     border: 1px solid #505050;
 }
 
+.registration-car-details .chkbox {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: #f0f0f0;
+    border: 2px solid #505050;
+    margin: 20px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.registration-car-details .chkbox input[type=checkbox] {
+    opacity: 0;
+}
+
+.registration-car-details .chkbox label {
+    position: absolute;
+    top: -15px;
+    left: 5px;
+    display: block;
+    color: transparent;
+    font-size: 225%;
+    font-weight: 400;
+    transition: all 0.2s;
+}
+
+.registration-car-details .chkbox input[type=checkbox]:checked + label {
+    color: #ff5722;
+}
+
 .registration-car-details .small-buttons {
     text-align: right;
     margin-top: 0;
+}
+
+.registration-car-details .side-by-side-small {
+    display: inline-block;
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
+}
+
+.registration-car-details .side-by-side {
+    display: inline-block;
+    width: 75%;
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
+}
+
+.registration-car-details .side-by-side p {
+    margin-left: -10px;
 }
 
 /*----- Pick up/Drop off Location & Fare Screen -----*/
@@ -278,4 +356,72 @@ header p {
     font-weight: 400;
     text-align: center;
     margin-bottom: 50px;
+}
+
+/*----- Waiting Screen -----*/
+
+.waiting-screen {
+    position: absolute;
+}
+
+.waiting-screen h6 {
+    font-size: 80%;
+    padding: 10px 20px;
+    font-weight: 400;
+    border-bottom: 1px solid rgba(25, 25, 25, 0.05);
+}
+
+.waiting-screen h6 span {
+    font-weight: 300;
+}
+
+.waiting-screen .map {
+    display: block;
+    height: 300px;
+    box-shadow: 1px 1px 1px 1px #e2e2e2;
+    margin: 10px;
+}
+
+.waiting-screen img {
+    display: block;
+    width: 30%;
+    height: auto;
+    float: left;
+    margin-right: 10px;
+    border-radius: 50%;
+    border: 1px solid #505050;
+    margin-bottom: 15px;
+}
+
+.waiting-screen p {
+    font-size: 80%;
+}
+
+.waiting-screen .driver-info {
+    position: relative;
+    margin: 30px auto 0;
+    top: 50%;
+}
+
+.waiting-screen .driver-info h3 {
+    display: block;
+    margin: 0 auto 15px 5px;
+    font-weight: 400;
+    font-size: 80%;
+}
+
+.waiting-screen .driver-info h4 {
+    font-size: 80%;
+}
+
+.waiting-screen .driver-info h4 span {
+    display: block;
+    margin: 15px auto 15px 5px;
+    font-size: 80%;
+}
+
+.waiting-screen .map img {
+    display: block;
+    width: 100%;
+    border-radius: 0;
 }

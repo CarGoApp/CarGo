@@ -22,6 +22,7 @@
     <header class="screen">
         <div class="verticalcenter">
             <h1>CarGo</h1>
+            <i class="ion-model-s icon-big"></i>
             <h2>a better way to get around!</h2>
             <a href="#" class="button full-button">Sign up</a>
             <p>We only take people to and from places. We never run a cab service, just a new way of moving people around with cars.</p>
@@ -38,7 +39,7 @@
             <a href="#" class="button full-button">Proceed</a>
         </div>
     </section>
-    <section class="signup-carddetails screen">
+    <section class="signup-carddetails gray-bg screen">
         <div class="verticalcenter">
             <form class="input-form">
                 <div class="input-row">
@@ -52,7 +53,7 @@
                         <input type="text" name="startdate" id="startdate" placeholder="Start Date">
                         <label for="cardno">Start date</label>
                     </span>
-                    <span class="input-element small-input">
+                    <span class="input-element small-input right-align">
                         <input type="text" name="enddate" id="enddate" placeholder="End Date">
                         <label for="cardno">End date</label>
                     </span>
@@ -76,9 +77,9 @@
     <section class="registration-car-details screen">
         <div class="verticalcenter">
             <form class="car-details-input-form">
-                <p><i class="ion-card icon-not-yet"></i> Drivers license</p>
                 <a href="#" class="button camera-button">
                     <i class="ion-android-camera"></i>
+                    <p><i class="ion-card icon-not-yet"></i> Drivers license</p>
 <!--
                     <span class="id-image">
                         <img src="resources/images/background002.jpg">
@@ -97,9 +98,14 @@
                         <label for="policynumber">Policy Number</label>
                     </span>
                 </div>
-                <p>Are you insured for more than one driver?</p>
-                <div class="input-row small-buttons">
-                    <a href="#" class="button full-button small-button first">Yes</a><a href="#" class="button ghost-button small-button last">No</a>
+                <div class="side-by-side-small">
+                    <div class="chkbox">
+                        <input type="checkbox" value="yes" id="chkboxInput" name="chkboxInput">
+                        <label for="chkboxInput"><i class="ion-android-done"></i></label>
+                    </div>
+                </div>
+                <div class="side-by-side">
+                    <p>I am insured for more than one driver.</p>
                 </div>
                 <a href="#" class="button full-button">Save</a>
             </form>
@@ -124,6 +130,23 @@
                 <h2>£XX.XX</h2>
                 <a href="#" class="button full-button">Save</a>
             </form>
+        </div>
+    </section>
+    <section class="waiting-screen screen">
+        <div class="verticalcenter">
+            <h6>Pick up: <span>Here</span></h6>
+            <h6>Drop off: <span>There</span></h6>
+            <div class="map">
+                <img src="resources/images/londonmap.png">
+            </div>
+            <p>Pick up will be in 10 mins. Driver will call when he's at your pick up location.</p>
+            <div class="driver-card">
+                <img src="resources/images/annettemay.jpg">
+                <div class="driver-info">
+                    <h3>Annette May</h3>
+                    <h4>079xxxxxxxx <span>Toyota Avensis "Black"</span></h4>
+                </div>
+            </div>
         </div>
     </section>
 </body>
