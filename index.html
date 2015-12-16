@@ -16,19 +16,47 @@
     <link rel = "stylesheet" type = "text/css" href = "vendors/css/ionicons.min.css" />
 
 <!-- JS Section -->
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="resources/js/script.js"></script>
 </head>
 <body>
-    <header class="screen">
+    <header class="welcome-screen screen js--welcome-screen" id="js--information-screen">
         <div class="verticalcenter">
             <h1>CarGo</h1>
-            <i class="ion-model-s icon-big"></i>
+            <h1>
+                <i class="ion-model-s icon-big"></i>
+            </h1>
             <h2>a better way to get around!</h2>
-            <a href="#" class="button full-button">Sign up</a>
+            <a href="#" class="button full-button js--signup-button">Signup / Login</a>
             <p>We only take people to and from places. We never run a cab service, just a new way of moving people around with cars.</p>
         </div>
     </header>
-    <section class="information-screen screen">
+    <section class="login-signup-screen screen js--login-signup-screen" id="js--login-signup-screen">
+        <div class="verticalcenter">
+            <form class="input-form">
+                <div class="input-row">
+                    <span class="input-element">
+                        <input type="text" name="email" id="email" placeholder="Email">
+                        <label for="email">Email</label>
+                    </span>
+                </div>
+                <div class="input-row">
+                    <span class="input-element">
+                        <input type="password" name="password" id="password" placeholder="Password">
+                        <label for="password">Password</label>
+                    </span>
+                </div>
+                <a href="#" class="button full-button js--login-signup-save-button">Save</a>
+            </form>
+        </div>
+    </section>
+    <section class="login-signup-error-screen screen js--login-signup-error-screen" id="js--login-signup-error-screen">
+        <div class="verticalcenter">
+            <p>The email or password you entered is incorrect, please try again.</p>
+            <a href="#" class="button full-button js--login-signup-try-again-button">Try again</a>
+        </div>
+    </section>
+    <section class="information-screen screen js--information-screen" id="js--information-screen">
         <div class="verticalcenter">
             <p> We only charge your card after your journey is completed successfully.
             </p>
@@ -36,10 +64,10 @@
             </p>
             <p> This is only a security check for you and our members.
             </p>
-            <a href="#" class="button full-button">Proceed</a>
+            <a href="#" class="button full-button js--screen-proceed-button">Proceed</a>
         </div>
     </section>
-    <section class="signup-carddetails gray-bg screen">
+    <section class="signup-carddetails-screen screen js--signup-carddetails-screen" id="js--signup-carddetails-screen">
         <div class="verticalcenter">
             <form class="input-form">
                 <div class="input-row">
@@ -64,17 +92,17 @@
                         <label for="cardno">CVC</label>
                     </span>
                 </div>
-                <a href="#" class="button full-button">Save</a>
+                <a href="#" class="button full-button js--signup-carddetails-button">Save</a>
             </form>
         </div>
     </section>
-    <section class="signup-type screen">
+    <section class="signup-type-screen screen js--signup-type-screen" id="js--signup-type-screen">
         <div class="verticalcenter">
-            <a href="#" class="button full-button">Join CarClub</a>
-            <a href="#" class="button ghost-button">Book a cab</a>
+            <a href="#" class="button full-button js--join-carclub-button">Join CarClub</a>
+            <a href="#" class="button ghost-button js--book-cab-button">Book a cab</a>
         </div>
     </section>
-    <section class="registration-car-details screen">
+    <section class="registration-cardetails-screen screen js--registration-car-details-screen" id="js--registration-cardetails-screen">
         <div class="verticalcenter">
             <form class="car-details-input-form">
                 <a href="#" class="button camera-button">
@@ -98,20 +126,22 @@
                         <label for="policynumber">Policy Number</label>
                     </span>
                 </div>
-                <div class="side-by-side-small">
-                    <div class="chkbox">
-                        <input type="checkbox" value="yes" id="chkboxInput" name="chkboxInput">
-                        <label for="chkboxInput"><i class="ion-android-done"></i></label>
+                <div class="input-row">
+                    <div class="side-by-side-small">
+                        <div class="chkbox">
+                            <input type="checkbox" value="yes" id="chkboxInput" name="chkboxInput">
+                            <label for="chkboxInput"><i class="ion-android-done"></i></label>
+                        </div>
+                    </div>
+                    <div class="side-by-side">
+                        <p>I am insured for more than one driver.</p>
                     </div>
                 </div>
-                <div class="side-by-side">
-                    <p>I am insured for more than one driver.</p>
-                </div>
-                <a href="#" class="button full-button">Save</a>
+                <a href="#" class="button full-button js--registration-cardetails-save-button">Save</a>
             </form>
         </div>
     </section>
-    <section class="location-screen screen">
+    <section class="location-screen screen js--location-screen" id="js--location-screen">
         <div class="verticalcenter">
             <form class="car-details-input-form">
                 <div class="input-row">
@@ -128,11 +158,11 @@
                 </div>
                 <p>Fare:</p>
                 <h2>£XX.XX</h2>
-                <a href="#" class="button full-button">Save</a>
+                <a href="#" class="button full-button js--location-screen-save-button">Save</a>
             </form>
         </div>
     </section>
-    <section class="waiting-screen screen">
+    <section class="waiting-screen screen js--waiting-screen" id="js--waiting-screen">
         <div class="verticalcenter">
             <h6>Pick up: <span>Here</span></h6>
             <h6>Drop off: <span>There</span></h6>
@@ -147,6 +177,88 @@
                     <h4>079xxxxxxxx <span>Toyota Avensis "Black"</span></h4>
                 </div>
             </div>
+        </div>
+    </section>
+    <section class="driver-waiting-screen screen js--driver-waiting-screen" id="js--driver-waiting-screen">
+        <div class="verticalcenter">
+            <h6>Pick up: <span>Here</span></h6>
+            <h6>Drop off: <span>There</span></h6>
+            <div class="map">
+                <img src="resources/images/londonmap.png">
+            </div>
+            <p>You have a new client to pickup.</p>
+            <p>Estimate time <span>10 mins</span>.</p>
+        </div>
+    </section>
+    <section class="driver-list-services-screen screen js--driver-list-services-screen" id="js--driver-list-services-screen">
+        <div class="verticalcenter">
+            <h2>Pending services</h2>
+            <ul class="list-services">
+                <li>
+                    <i class="ion-android-time"></i>
+                    <div>
+                        <h6>Pick up client at <span>7:45pm</span> in <span>YO31 8NF</span></h6>
+                        <p>Estimate time <span>10 mins</span>.</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="ion-android-time"></i>
+                    <div>
+                        <h6>Pick up client at <span>7:45pm</span> in <span>YO31 8NF</span></h6>
+                        <p>Estimate time <span>10 mins</span>.</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="ion-android-time"></i>
+                    <div>
+                        <h6>Pick up client at <span>7:45pm</span> in <span>YO31 8NF</span></h6>
+                        <p>Estimate time <span>10 mins</span>.</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="ion-android-done"></i>
+                    <div>
+                        <h6>Pick up client at <span>7:45pm</span> in <span>YO31 8NF</span></h6>
+                        <p>Estimate time <span>10 mins</span>.</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="ion-android-done"></i>
+                    <div>
+                        <h6>Pick up client at <span>7:45pm</span> in <span>YO31 8NF</span></h6>
+                        <p>Estimate time <span>10 mins</span>.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="driver-list-earnings-screen screen js--driver-list-earnings-screen" id="js--driver-list-earnings-screen">
+        <div class="verticalcenter">
+            <h2>Accrued</h2>
+            <div class="driver-card">
+                <img src="resources/images/annettemay.jpg">
+                <div class="driver-info">
+                    <div><i class="ion-person"></i><h3>Annette May</h3></div>
+                    <div><i class="ion-android-home"></i><h3>This is her address line</h3></div>
+                    <div><i class="ion-android-call"></i><h3>07471234567</h3></div>
+                </div>
+            </div>
+            <div class="accrued-amount">
+                <div class="accrued-row">
+                    <div class="icon-section">
+                        <i class="ion-pie-graph big-icon"></i>
+                    </div>
+                    <div class="title-section">
+                        <h3>Accrued Amount</h3>
+                    </div>
+                    <div class="amount-section">
+                        <h4>This month</h4>
+                        <h3>£450.00</h3>
+                    </div>
+                </div>
+            </div>
+            <p><span>Please read and confirm below</span>You must commit to the times you have agreed to in order to continue being a CarClub member and a user of CarGo. Failure to notify us of any changes will result in instant removal from the CarClub and CarGo altogether. Thank you and have a great experience with us.</p>
+            <a href="#" class="button full-button">Finish</a>
         </div>
     </section>
 </body>

@@ -15,218 +15,124 @@ html {
     text-rendering: optimizeLegibility;
 }
 
-.icon-not-yet {
-    color: #505050;
-}
-
-.icon-ok {
-    color: #FF5722;
-}
-
-.icon-big {
-    display: block;
-    font-size: 400%;
-    text-align: center;
-    margin: 0 auto 30px;
-    color: #fff;
+body {
+    margin: 0;
+    padding: 0;
 }
 
 .screen {
     display: block;
+    width: calc(100%-10%);
+    max-width: 500px;
     height: 100vh;
-    margin: 0;
+    padding: 0 5%;
+    margin: 0 auto;
 }
 
 .verticalcenter {
-    position:relative;
+    position: relative;
+    display: block;
     width: 100%;
     top: 50%;
     transform: translateY(-50%);
 }
 
-.button {
+.button:link,
+.button:visited {
     display: block;
-    margin: 30px auto;
-    border-radius: 2px;
-    text-align: center;
-    text-decoration: none;
-}
-
-.camera-button:link,
-.camera-button:visited {
-    display: block;
-    width: 90%;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #505050;
-    border-radius: 5px;
-    text-decoration: none;
-    color: #505050;
-    transition: color 0.3s, border-color 0.3s;
-}
-
-.camera-button:hover,
-.camera-button:active {
-    color: #FF5722;
-    border-color: #FF5722;
-}
-
-.camera-button i {
-    display: block;
-    margin: 20px auto;
-    font-size: 400%;
-}
-
-.camera-button p {
-    font-size: 50%;
-    font-weight: 400;
-}
-
-.camera-button p > i {
-    display: inline-block;
-    font-size: 100%;
-    font-weight: 400;
-}
-
-.full-button:link,
-.full-button:visited,
-.ghost-button:link,
-.ghost-button:visited {
-    width: 50%;
-    height: 50px;
-    font-size: 110%;
-    color: #fff;
-    background-color: #FF5722;
-    border: 1px solid #FF5722;
+    width: 40%;
     line-height: 50px;
-    font-weight: 400;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.full-button:active,
-.full-button:hover {
-    background-color: #ff3e00;
+    padding: 0 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 2px;
+    background-color: #ff5722;
     color: #fff;
+    border: 2px solid #ff5722;
+    font-weight: 400;
+    margin: 15px auto;
+    transition: all 0.3s;
 }
 
-.ghost-button:link,
-.ghost-button:visited {
-    background-color: rgba(0,0,0,0.25);
-    color: #FF5722;
+.button:hover,
+.button:active {
+    background-color: #ff3d00;
 }
 
-.ghost-button:active,
-.ghost-button:hover {
-    background-color: rgba(0,0,0,0.5);
+.button.ghost-button:link,
+.button.ghost-button:visited {
+    color: #ff5722;
+    background-color: rgba(255, 87, 34, 0.1);
+    transition: all 0.3s;
 }
 
-.ghost-button.small-button,
-.full-button.small-button {
-    display: inline-block;
-    width: 50px;
-    margin: 0;
-    padding: 0;
+.button.ghost-button:hover,
+.button.ghost-button:active {
+    color: #ff5722;
+    background-color: rgba(255, 87, 34, 0.25);
 }
 
-.ghost-button.small-button.first,
-.full-button.small-button.first {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+h1{
+    text-align: center;
+    font-size: 250%;
+    font-weight: 400;
 }
 
-.ghost-button.small-button.last,
-.full-button.small-button.last {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+h1 + i {
+    display: block;
+    text-align: center;
+    font-size: 500%;
+    margin: 10px auto;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h2 {
+    font-size: 125%;
+}
+
+p {
     letter-spacing: 1px;
     word-spacing: 3px;
-}
-
-/*----- Landing page -----*/
-header {
-    display: block;
-    width: 100%;
-    height: 100vh;
-    background: linear-gradient(rgba(32, 32, 32, 0.90), rgba(80, 80, 80, 0.8)), url(../images/background001.jpg);
-    background-size: cover;
-    background-position: center;
-}
-
-header h1 {
-    font-size: 200%;
-    color: #fff;
-    width: 100%;
-    text-align: center;
-    padding: 30px 0;
-}
-
-header h2 {
-    font-size: 100%;
-    color: #fff;
-    width: 100%;
-    text-align: center;
-}
-
-header p {
-    display: block;
-    width: 90%;
-    font-size: 100%;
-    color: #fff;
+    text-align: justify;
     line-height: 125%;
-    padding: 0 3%;
-}
-
-/*----- Signup Information Screen -----*/
-
-.screen p {
-    margin: 15px auto;
-    display: block;
-    width: 90%;
-    font-size: 100%;
-    line-height: 125%;
-    padding: 0 3%;
-}
-
-/*----- Signup Screen Input screen -----*/
-
-.input-row {
-    width: 90%;
-    margin: 20px auto;
 }
 
 .input-element {
     display: block;
-    height: 50px;
     position: relative;
-    border: 1px solid #505050;
-}
-
-.input-element.small-input {
-    display: inline-block;
-    width: 45%;
-    margin: 0;
-    vertical-align: top;
-    text-align: right;
-}
-
-.input-element.small-input.right-align {
-    background-color: red;
-    float: right;
-}
-
-.input-element input {
-    border: none;
-    width: 100%;
+    margin: 15px 0;
     height: 50px;
+}
+
+.input-element input[type=text], .input-element input[type=password] {
+    display: block;
+    border: 0;
+    outline: 0;
+    width: 100%;
     font-size: 100%;
-    font-weight: 100;
-    box-sizing: border-box;
-    padding: 0 10px;
-    outline: none;
-    transition: height 0.3s;
+    line-height: 50px;
+    transition: all 0.5s;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.input-element input[type=text] ~ label, .input-element input[type=password] ~ label {
+    display:none;
+    transition: all 0.5s;
+}
+
+.input-element input[type=text]:focus, .input-element input[type=password]:focus {
+    display: block;
+    width: 100%;
+    font-size: 100%;
+    line-height: 35px;
+    border: 0;
+}
+
+.input-element input[type=text]:focus ~ label, .input-element input[type=password]:focus ~ label {
+    display: block;
+    width: 100;
+    font-size: 50%;
+    border-top: 1px solid #212121;
+    line-height: 14px;
 }
 
 .input-element input[placeholder]::-webkit-input-placeholder {
@@ -235,63 +141,81 @@ header p {
      -moz-transition: color 0.3s ease-in;
 }
 
-.input-element label {
-    display: block;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    font-size: 60%;
-    line-height: 15px;
-    background-color: #505050;
-    color: #fff;
-    overflow: hidden;
-    padding: 0 10px;
-    height: 0;
-    transition: height 0.3s;
-}
-
-.input-element input:focus {
-    height: 35px;
-}
-
 .input-element input:focus::-webkit-input-placeholder { color:transparent; }
 .input-element input:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
 .input-element input:focus::-moz-placeholder { color:transparent; } /* FF 19+ */
 .input-element input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
 
-.input-element input:focus ~ label {
-    height: 15px;
+.input-row:last-of-type {
+    margin-bottom: 50px;
 }
 
-/*----- Type Selection Screen -----*/
+.driver-card {
+    margin: 10px 0;
+}
 
-.signup-type {
+.driver-card img {
+    display: inline-block;
+    border: 1px solid #212121;
+    border-radius: 50%;
+    width: 100px;
+}
+
+.driver-card .driver-info {
+    display: inline-block;
+    width: 65%;
+    vertical-align: top;
+    line-height: 33px;
+}
+
+.driver-card .driver-info h3 {
+    font-weight: 400;
+}
+
+.driver-card .driver-info h4{
+    font-size: 75%;
+}
+
+.driver-card .driver-info h4 span {
     display: block;
-    width: 100%;
-    height: 100vh;
+    font-style: italic;
+}
+
+/* ----- HEADER SCREEN ----- */
+
+header {
+    background: linear-gradient(rgba(32, 32, 32, 0.90), rgba(80, 80, 80, 0.8)), url(../images/background001.jpg);
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+}
+
+.signup-type-screen {
     background: linear-gradient(rgba(32, 32, 32, 0.90), rgba(80, 80, 80, 0.8)), url(../images/background003.jpg);
     background-size: cover;
     background-position: center;
 }
 
-/*----- Car Information Input Screen -----*/
-
-.id-image {
-    display: block;
-    width: 100%;
-}
-
-.id-image img {
-    display: block;
+/* ----- Car Details Screen ----- */
+.registration-cardetails-screen .camera-button {
+    width: 80%;
     height: 100px;
-    width: auto;
-    margin: 5px auto;
-    border-radius: 5px;
-    border: 1px solid #505050;
 }
 
-.registration-car-details .chkbox {
+.registration-cardetails-screen .camera-button i {
+    margin-top: 220px;
+    font-size: 300%;
+}
+
+.registration-cardetails-screen .camera-button p {
+    text-align: center;
+}
+
+.registration-cardetails-screen .camera-button p i {
+    font-size: 100%;
+}
+
+.registration-cardetails-screen .chkbox {
     display: inline-block;
     width: 30px;
     height: 30px;
@@ -302,11 +226,11 @@ header p {
     position: relative;
 }
 
-.registration-car-details .chkbox input[type=checkbox] {
+.registration-cardetails-screen .chkbox input[type=checkbox] {
     opacity: 0;
 }
 
-.registration-car-details .chkbox label {
+.registration-cardetails-screen .chkbox label {
     position: absolute;
     top: -15px;
     left: 5px;
@@ -317,111 +241,164 @@ header p {
     transition: all 0.2s;
 }
 
-.registration-car-details .chkbox input[type=checkbox]:checked + label {
+.registration-cardetails-screen .chkbox input[type=checkbox]:checked + label {
     color: #ff5722;
 }
 
-.registration-car-details .small-buttons {
-    text-align: right;
-    margin-top: 0;
-}
-
-.registration-car-details .side-by-side-small {
+.registration-cardetails-screen .side-by-side-small {
     display: inline-block;
-    vertical-align: top;
-    padding: 0;
-    margin: 0;
+    line-height: 50px;
 }
 
-.registration-car-details .side-by-side {
+.registration-cardetails-screen .side-by-side {
     display: inline-block;
     width: 75%;
-    vertical-align: top;
-    padding: 0;
-    margin: 0;
+    line-height: 50px;
 }
 
-.registration-car-details .side-by-side p {
-    margin-left: -10px;
-}
-
-/*----- Pick up/Drop off Location & Fare Screen -----*/
+/* ----- Pickup / Drop-off Location Screen ----- */
 
 .location-screen p {
-    margin-top: 50px;
+    font-size: 125%;
 }
 
 .location-screen h2 {
-    font-size: 250%;
-    font-weight: 400;
+    font-size: 300%;
     text-align: center;
-    margin-bottom: 50px;
+    margin: 20px auto;
 }
 
-/*----- Waiting Screen -----*/
+/* ----- Waiting Screen ----- */
 
-.waiting-screen {
-    position: absolute;
+.driver-waiting-screen h6, .waiting-screen h6 {
+    line-height: 120%;
 }
 
-.waiting-screen h6 {
-    font-size: 80%;
-    padding: 10px 20px;
+.driver-waiting-screen h6 span, .waiting-screen h6 span {
     font-weight: 400;
-    border-bottom: 1px solid rgba(25, 25, 25, 0.05);
 }
 
-.waiting-screen h6 span {
+.waiting-screen .map img, .driver-waiting-screen .map img {
+    display: block;
+    width: 300px;
+    margin: 10px auto;
+}
+
+.driver-waiting-screen p, .waiting-screen p {
+    font-size: 80%;
+}
+
+/* ----- Drivers Waiting Screen ----- */
+
+
+/* ----- List of future services for drivers ----- */
+
+.driver-list-services-screen h2 {
+    margin-bottom: 20px;
+}
+
+.list-services li {
+    display: block;
+    margin: 10px 0;
+    font-size: 80%;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+.list-services i {
+    display: inline-block;
+    font-size: 200%;
+    vertical-align: top;
+    margin-right: 5px;
+}
+
+.list-services li div {
+    display: inline-block;
+}
+
+.list-services li h6 {
+}
+
+.list-services li span {
+    font-weight: 400;
+}
+
+.list-services li p {
+}
+
+.list-services li p span {
+}
+
+/* ----- Show a drivers earnings ----- */
+
+.driver-list-earnings-screen .driver-card .driver-info div {
+    display: block;
+    vertical-align: top;
+}
+
+.driver-list-earnings-screen .driver-card .driver-info div i {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.driver-list-earnings-screen .driver-card .driver-info div h3 {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: top;
+    font-size: 60%;
+}
+
+.accrued-row{
+    background-color: #f0f0f0;
+}
+
+.accrued-amount .icon-section {
+    display: inline-block;
+    width: 20%;
+    font-size: 300%;
+}
+
+.accrued-amount .title-section {
+    display: inline-block;
+    width: 40%;
+    vertical-align: top;
+}
+
+.accrued-amount .title-section h3 {
+    line-height: 400%;
+    font-size: 70%;
+    font-weight: 400;
+    margin-top: 3px;
+}
+
+.accrued-amount .amount-section {
+    display: inline-block;
+    width: 35%;
+    vertical-align: top;
+    margin-top: 7px;
+}
+
+.accrued-amount .amount-section h4 {
+    font-size: 60%;
+    text-align: center;
+    font-weight: 400;
+}
+
+.accrued-amount .amount-section h3 {
+    margin-top: 5px;
+    font-size: 150%;
+}
+
+.driver-list-earnings-screen p span {
+    display: block;
+    font-size: 90%;
+    font-weight: 400;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.driver-list-earnings-screen p {
+    display: block;
+    font-size: 70%;
     font-weight: 300;
-}
-
-.waiting-screen .map {
-    display: block;
-    height: 300px;
-    box-shadow: 1px 1px 1px 1px #e2e2e2;
-    margin: 10px;
-}
-
-.waiting-screen img {
-    display: block;
-    width: 30%;
-    height: auto;
-    float: left;
-    margin-right: 10px;
-    border-radius: 50%;
-    border: 1px solid #505050;
-    margin-bottom: 15px;
-}
-
-.waiting-screen p {
-    font-size: 80%;
-}
-
-.waiting-screen .driver-info {
-    position: relative;
-    margin: 30px auto 0;
-    top: 50%;
-}
-
-.waiting-screen .driver-info h3 {
-    display: block;
-    margin: 0 auto 15px 5px;
-    font-weight: 400;
-    font-size: 80%;
-}
-
-.waiting-screen .driver-info h4 {
-    font-size: 80%;
-}
-
-.waiting-screen .driver-info h4 span {
-    display: block;
-    margin: 15px auto 15px 5px;
-    font-size: 80%;
-}
-
-.waiting-screen .map img {
-    display: block;
-    width: 100%;
-    border-radius: 0;
+    margin-bottom: 5px;
 }
