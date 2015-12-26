@@ -13,20 +13,57 @@ html {
     font-size: 20px;
     font-weight: 300;
     text-rendering: optimizeLegibility;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     margin: 0;
     padding: 0;
+    vertical-align: top;
+}
+
+header nav {
+    display: block;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: 1000;
+}
+
+header nav a {
+    display: block;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    font-size: 125%;
+    text-decoration: none;
+    line-height: 50px;
+    color: #fff;
+    background-color: #505050;
+    margin: 0 auto;
+    border: 1px solid #eaeaea;
+    border-radius: 50%;
+}
+
+.screen-container {
+    position: absolute;
+    display: block;
+    max-width: 500px;
+    width: 100%;
+    height: 100vh;
+    background-color: red;
 }
 
 .screen {
+    position: relative;
     display: block;
     width: calc(100%-10%);
     max-width: 500px;
     height: 100vh;
     padding: 0 5%;
     margin: 0 auto;
+    background-color: #f2f2f2;
 }
 
 .verticalcenter {
@@ -107,11 +144,12 @@ p {
     display: block;
     border: 0;
     outline: 0;
-    width: 100%;
+    width: calc(100% - 20px);
     font-size: 100%;
     line-height: 50px;
     transition: all 0.5s;
     border-bottom: 1px solid #e2e2e2;
+    padding: 0 10px;
 }
 
 .input-element input[type=text] ~ label, .input-element input[type=password] ~ label {
@@ -121,7 +159,7 @@ p {
 
 .input-element input[type=text]:focus, .input-element input[type=password]:focus {
     display: block;
-    width: 100%;
+    width: calc(100% - 20px);
     font-size: 100%;
     line-height: 35px;
     border: 0;
@@ -183,11 +221,15 @@ p {
 
 /* ----- HEADER SCREEN ----- */
 
-header {
+#welcome-screen {
     background: linear-gradient(rgba(32, 32, 32, 0.90), rgba(80, 80, 80, 0.8)), url(../images/background001.jpg);
     background-size: cover;
     background-position: center;
     color: #fff;
+}
+
+#welcome-screen.screen {
+        display: block;
 }
 
 .signup-type-screen {
@@ -215,7 +257,7 @@ header {
     font-size: 100%;
 }
 
-.registration-cardetails-screen .chkbox {
+.chkbox {
     display: inline-block;
     width: 30px;
     height: 30px;
@@ -226,11 +268,11 @@ header {
     position: relative;
 }
 
-.registration-cardetails-screen .chkbox input[type=checkbox] {
+.chkbox input[type=checkbox] {
     opacity: 0;
 }
 
-.registration-cardetails-screen .chkbox label {
+.chkbox label {
     position: absolute;
     top: -15px;
     left: 5px;
@@ -241,16 +283,16 @@ header {
     transition: all 0.2s;
 }
 
-.registration-cardetails-screen .chkbox input[type=checkbox]:checked + label {
+.chkbox input[type=checkbox]:checked + label {
     color: #ff5722;
 }
 
-.registration-cardetails-screen .side-by-side-small {
+.side-by-side-small {
     display: inline-block;
     line-height: 50px;
 }
 
-.registration-cardetails-screen .side-by-side {
+.side-by-side {
     display: inline-block;
     width: 75%;
     line-height: 50px;
@@ -258,17 +300,17 @@ header {
 
 /* ----- Pickup / Drop-off Location Screen ----- */
 
-.location-screen p {
+#bookacab-locations-time p {
     font-size: 125%;
 }
 
-.location-screen h2 {
+#bookacab-locations-time h2 {
     font-size: 300%;
     text-align: center;
     margin: 20px auto;
 }
 
-.location-screen #mapPlanTrip {
+#mapPlanTrip {
     width: 90%;
     height: 200px;
     margin: 0 auto;
@@ -280,7 +322,7 @@ header {
     line-height: 120%;
 }
 
-.driver-waiting-screen h6 span, .waiting-screen h6 span {
+.screen h6 span {
     font-weight: 400;
 }
 
@@ -308,6 +350,12 @@ header {
     margin: 10px 0;
     font-size: 80%;
     border-bottom: 1px solid #c0c0c0;
+}
+
+.list-services li a {
+    display: block;
+    width: 100%;
+    color: #505050;
 }
 
 .list-services i {

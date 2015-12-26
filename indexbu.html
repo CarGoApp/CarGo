@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>CarGo</title>
+
+    <meta http-equiv = "Content-Type" content = "text/html; charset = utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+<!-- CSS Section -->
+    <link rel = "stylesheet" type = "text/css" href = "resources/css/reset.css" />
+    <link rel = "stylesheet" type = "text/css" href = "resources/css/grid.css" />
+    <link rel = "stylesheet" type = "text/css" href = "resources/css/style.css" />
+    <link rel = "stylesheet" type = "text/css" href = "vendors/css/ionicons.min.css" />
+    <link rel = "stylesheet" type = "text/css" href="vendors/js/datepicker/compressed/themes/default.css" />
+    <link rel = "stylesheet" type = "text/css" href="vendors/js/datepicker/compressed/themes/default.date.css" />
+    <link rel = "stylesheet" type = "text/css" href="vendors/js/datepicker/compressed/themes/default.time.css" />
+</head>
+<body>
+    <section class='screen zero' id='welcome-screen'>
+        <input type='hidden' value='1' />
+        <div class='verticalcenter'>
+            <h1>CarGo</h1>
+            <h1>
+                <i class='ion-model-s icon-big'></i>
+            </h1>
+            <h2>a better way to get around!</h2>
+            <a href='#' class='button full-button js--signup-button'>Signup / Login</a>
+            <p>We only take people to and from places. We never run a cab service, just a new way of moving people around with cars.</p>
+        </div>
+    </section>
+    <section class='screen one' id='login-signup-screen'>
+        <input type='hidden' value='2' />
+        <div class='verticalcenter'>
+            <form class='input-form'>
+                <div class='input-row'>
+                    <span class='input-element'>
+                        <input type='text' name='login-email' id='login-email' placeholder='Email'>
+                        <label for='login-email'>Email</label>
+                    </span>
+                </div>
+                <div class='input-row'>
+                    <span class='input-element'>
+                        <input type='password' name='login-password' id='login-password' placeholder='Password'>
+                        <label for='login-password'>Password</label>
+                    </span>
+                </div>
+                <a href='#' class='button full-button js--login-signup-save-button'>Login/Signup</a>
+            </form>
+        </div>
+    </section>
+    <section class='screen two' id='login-type'>
+        <input type='hidden' value='3' />
+        <div class='verticalcenter'>
+            <a href='#' class='button full-button js--join-carclub-button'>CarClub</a>
+            <a href='#' class='button ghost-button js--hire-car-button'>Hire a car</a>
+            <a href='#' class='button ghost-button js--book-cab-button'>Book a cab</a>
+        </div>
+    </section>
+    <section class='screen three' id='carclub-menu'>
+        <input type='hidden' value='5' />
+        <div class='verticalcenter'>
+            <a href='#' class='button full-button js--show-services'>Show Services</a>
+            <a href='#' class='button ghost-button js--setup-schedule'>Setup Schedule</a>
+            <a href='#' class='button ghost-button js--finances'>Finances</a>
+        </div>
+    </section>
+    <section class='screen four' id='carclub-schedule'>
+        <input type='hidden' value='5' />
+        <div class='verticalcenter'>
+            SCHEDULE FOR CAR CLUB
+            <a href='#' class='button full-button'>Next 5</a>
+        </div>
+    </section>
+    <section class='screen five' id='carclub-pending-services'>
+        <input type='hidden' value='6' />
+        <div class='verticalcenter'>
+            <h2>Pending services</h2>
+            <ul class='list-services'>
+                <li>
+                    <i class='ion-android-time'></i>
+                    <div>
+                        <h6>Pick up client at <span>7:45pm</span> in <span>YO31 8NF</span></h6>
+                        <p>Estimate time <span>10 mins</span>.</p>
+                    </div>
+                </li>
+                <li>
+                    <i class='ion-android-time'></i>
+                    <div>
+                        <h6>Pick up client at <span>7:45pm</span> in <span>YO31 8NF</span></h6>
+                        <p>Estimate time <span>10 mins</span>.</p>
+                    </div>
+                </li>
+                <li>
+                    <a href='#'>
+                        <i class='ion-android-time'></i>
+                        <div>
+                            <h6>Pick up client at <span>7:45pm</span> in <span>YO31 8NF</span></h6>
+                            <p>Estimate time <span>10 mins</span>.</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <i class='ion-android-done'></i>
+                    <div>
+                        <h6>Pick up client at <span>7:45pm</span> in <span>YO31 8NF</span></h6>
+                        <p>Estimate time <span>10 mins</span>.</p>
+                    </div>
+                </li>
+                <li>
+                    <i class='ion-android-done'></i>
+                    <div>
+                        <h6>Pick up client at <span>7:45pm</span> in <span>YO31 8NF</span></h6>
+                        <p>Estimate time <span>10 mins</span>.</p>
+                    </div>
+                </li>
+            </ul>
+            <a href='#' class='button full-button'>Next 6</a>
+        </div>
+    </section>
+    <section class='screen six' id='carclub-service-information'>
+        <input type='hidden' value='7' />
+        <div class='verticalcenter'>
+            <h6>Pick up: <span>Here</span></h6>
+            <h6>Drop off: <span>There</span></h6>
+            <div class='map'>
+                <img src='resources/images/londonmap.png'>
+            </div>
+            <p>You have a new client to pickup.</p>
+            <p>Estimate time <span>10 mins</span>.</p>
+        <a href='#' class='button full-button'>Next 6</a>
+        </div>
+    </section>
+    <section class='screen seven' id='carclub-member-details'>
+        <input type='hidden' value='8' />
+        <div class='verticalcenter'>
+            MEMBER DETAILS
+            <a href='#' class='button full-button'>Next 7</a>
+        </div>
+    </section>
+    <section class='screen eight' id='carclub-member-finances'>
+        <input type='hidden' value='9' />
+        <div class='verticalcenter'>
+            <h2>Accrued</h2>
+            <div class='driver-card'>
+                <img src='resources/images/annettemay.jpg'>
+                <div class='driver-info'>
+                    <div><i class='ion-person'></i><h3>Annette May</h3></div>
+                    <div><i class='ion-android-home'></i><h3>This is her address line</h3></div>
+                    <div><i class='ion-android-call'></i><h3>07471234567</h3></div>
+                </div>
+            </div>
+            <div class='accrued-amount'>
+                <div class='accrued-row'>
+                    <div class='icon-section'>
+                        <i class='ion-pie-graph big-icon'></i>
+                    </div>
+                    <div class='title-section'>
+                        <h3>Accrued Amount</h3>
+                    </div>
+                    <div class='amount-section'>
+                        <h4>This month</h4>
+                        <h3>£450.00</h3>
+                    </div>
+                </div>
+            </div>
+            <p><span>Please read and confirm below</span>You must commit to the times you have agreed to in order to continue being a CarClub member and a user of CarGo. Failure to notify us of any changes will result in instant removal from the CarClub and CarGo altogether. Thank you and have a great experience with us.</p>
+            <a href='#' class='button full-button'>Finish</a>
+        </div>
+    </section>
+    <section class='screen nine' id='signup-member-details'>
+        <input type='hidden' value='10' />
+        <div class='verticalcenter'>
+            <form class='input-form'>
+                <div class='input-row'>
+                    <span class='input-element'>
+                        <input type='text' name='full-name' id='full-name' placeholder='Full Name'>
+                        <label for='full-name'>Full Name</label>
+                    </span>
+                    <span class='input-element'>
+                        <input type='text' name='phone-number' id='phone-number' placeholder='Phone Number'>
+                        <label for='cardno'>Phone Number</label>
+                    </span>
+                    <span class='input-element'>
+                        <input type='text' name='home-address' id='home-address' placeholder='Home Address'>
+                        <label for='home-address'>Home Address</label>
+                    </span>
+                </div>
+                <div class='input-row'>
+                    <div class='side-by-side-small'>
+                        <div class='chkbox'>
+                            <input type='checkbox' value='yes' id='chkboxInput' name='chkboxInput'>
+                            <label for='chkboxInput'><i class='ion-android-done'></i></label>
+                        </div>
+                    </div>
+                    <div class='side-by-side'>
+                        <p>I want to join CarClub.</p>
+                    </div>
+                </div>
+                <a href='#' class='button full-button js--signup-member-details-button'>Save</a>
+            </form>
+        </div>
+    </section>
+    <section class='screen ten' id='signup-member-car-details'>
+        <input type='hidden' value='11' />
+        <div class='verticalcenter'>
+            <form class='car-details-input-form'>
+                <a href='#' class='button camera-button'>
+                    <i class='ion-android-camera'></i>
+                    <p><i class='ion-card icon-not-yet'></i> Drivers license</p>
+<!--
+                    <span class='id-image'>
+                        <img src='resources/images/background002.jpg'>
+                    </span>
+-->
+                </a>
+                    <span class='input-element'>
+                        <input type='text' name='car-description' id='car-description' placeholder='Car Description'>
+                        <label for='car-description'>Car Description (Make, Model, etc...)</label>
+                    </span>
+                    <span class='input-element'>
+                        <input type='text' name='car-passengers' id='car-passengers' placeholder='Number of Passengers'>
+                        <label for='car-make'>Number of Passengers (including driver) </label>
+                    </span>
+                <div class='input-row'>
+                    <span class='input-element'>
+                        <input type='text' name='carreg' id='carreg' placeholder='Car Registration Number'>
+                        <label for='carreg'>Car Registration Number</label>
+                    </span>
+                </div>
+                <div class='input-row'>
+                    <span class='input-element'>
+                        <input type='text' name='policynumber' id='policynumber' placeholder='Policy Number'>
+                        <label for='policynumber'>Policy Number</label>
+                    </span>
+                </div>
+                <div class='input-row'>
+                    <div class='side-by-side-small'>
+                        <div class='chkbox'>
+                            <input type='checkbox' value='yes' id='chkboxInput' name='chkboxInput'>
+                            <label for='chkboxInput'><i class='ion-android-done'></i></label>
+                        </div>
+                    </div>
+                    <div class='side-by-side'>
+                        <p>I am insured for more than one driver.</p>
+                    </div>
+                </div>
+                <a href='#' class='button full-button js--registration-cardetails-save-button'>Save</a>
+            </form>
+        </div>
+    </section>
+    <section class='screen eleven' id='carhire-menu'>
+        <input type='hidden' value='12' />
+        <div class='verticalcenter'>
+            <a href='#' class='button full-button js--hire-a-car'>View hirings</a>
+            <a href='#' class='button ghost-button js--view-scheduled-hires'>View scheduled hires</a>
+        </div>
+    </section>
+    <section class='screen twelve' id='carhire-details'>
+        <input type='hidden' value='13' />
+        <div class='verticalcenter'>
+            HIRE A CAR - DETAILS
+            <a href='#' class='button full-button'>Next 12</a>
+        </div>
+    </section>
+    <section class='screen thirteen' id='bookacab-admin'>
+        <input type='hidden' value='14' />
+        <div class='verticalcenter'>
+            <a href='#' class='button full-button js--show-services'>Book</a>
+            <a href='#' class='button ghost-button js--setup-schedule'>View cab bookings</a>
+        </div>
+    </section>
+    <section class='screen fourteen' id='bookacab-date-time'>
+        <input type='hidden' value='15' />
+        <div class='verticalcenter'>
+            BOOK A CAB - DETAILS
+            <a href='#' class='button full-button'>Next 14</a>
+        </div>
+    </section>
+    <section class='screen fifteen' id='bookacab-locations-time'>
+        <input type='hidden' value='16' />
+        <div class='verticalcenter'>
+            <form class='car-details-input-form'>
+                <div class='input-row'>
+                    <span class='input-element'>
+                        <input id='input_01' class='datepicker' name='date' type='text' autofocuss value='14 August, 2014' data-valuee='2014-08-08'>
+                        <label for='pickup'>Pick up location</label>
+                    </span>
+                </div>
+                <div class='input-row'>
+                    <span class='input-element'>
+                        <input type='text' name='pickup-location' id='pickup-location' placeholder='Pick up location'>
+                        <label for='pickup'>Pick up location</label>
+                    </span>
+                </div>
+                <div class='input-row'>
+                    <span class='input-element'>
+                        <input type='text' name='dropoff-location' id='dropoff-location' placeholder='Drop off location'>
+                        <label for='dropoff'>Drop off location</label>
+                    </span>
+                </div>
+                <div class='input-row'>
+                    <div id='mapPlanTrip'></div>
+                </div>
+                <p>Fare:</p>
+                <h2 id='location-screen-fare'>£XX.XX</h2>
+                <a href='#' class='button full-button js--location-screen-save-button'>Save</a>
+            </form>
+        </div>
+    </section>
+    <section class='screen sixteen' id='bookacab-wait'>
+        <input type='hidden' value='17' />
+        <div class='verticalcenter'>
+            <h6>Pick up: <span>Here</span></h6>
+            <h6>Drop off: <span>There</span></h6>
+            <div class='input-row'>
+                <div id='mapPlanTrip'></div>
+            </div>
+            <p>Pick up will be in 10 mins. Driver will call when he's at your pick up location.</p>
+            <div class='driver-card'>
+                <img src='resources/images/annettemay.jpg'>
+                <div class='driver-info'>
+                    <h3>Annette May</h3>
+                    <h4>079xxxxxxxx <span>Toyota Avensis 'Black'</span></h4>
+                </div>
+            </div>
+            <a href='#' class='button full-button'>Next 16</a>
+        </div>
+    </section>
+
+<!-- JS Section -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="vendors/js/gmaps.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+    <script src="https://www.parsecdn.com/js/parse-1.6.11.min.js"></script>
+    <script>
+        Parse.initialize("WqVzj2bWMfQpQ8cKpBCW7O7d6gaz3qZj8NPPOwb5", "4YxIU03f5axBJ8cJige5ENSFIzXIsJ7Gee5hNmtY");
+    </script>
+    <script type="text/javascript" src="vendors/js/datepicker/compressed/picker.js"></script>
+    <script type="text/javascript" src="vendors/js/datepicker/compressed/picker.date.js"></script>
+    <script type="text/javascript" src="vendors/js/datepicker/compressed/picker.time.js"></script>
+    <script type="text/javascript" src="resources/js/script.js"></script>
+</body>
+</html>
