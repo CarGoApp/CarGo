@@ -17,6 +17,7 @@
     <link rel = "stylesheet" type = "text/css" href="vendors/js/datepicker/compressed/themes/default.css" />
     <link rel = "stylesheet" type = "text/css" href="vendors/js/datepicker/compressed/themes/default.date.css" />
     <link rel = "stylesheet" type = "text/css" href="vendors/js/datepicker/compressed/themes/default.time.css" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 </head>
 <body>
     <header>
@@ -27,32 +28,57 @@
     <section class='screen'>
     </section>
 
+
 <!-- JS Section -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyDn8-igquxxUaLlrQJw3h_71LMz-y1fNrQ"></script>
     <script type="text/javascript" src="vendors/js/gmaps.js"></script>
     <script type="text/javascript" src="vendors/js/handlebars.js"></script>
     <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
     <script src="https://www.parsecdn.com/js/parse-1.6.11.min.js"></script>
     <script>
-        Parse.initialize("WqVzj2bWMfQpQ8cKpBCW7O7d6gaz3qZj8NPPOwb5", "4YxIU03f5axBJ8cJige5ENSFIzXIsJ7Gee5hNmtY");
+        Parse.initialize("R8lCbn3j3q5lsXm6VDdi1WW7jy69F7aVizqVaEE8", "rV8Wj9mTge50pZH2VKKGwAtFtMQSCobcA6WnT9oI");
     </script>
-    <script type="text/javascript" src="vendors/js/datepicker/compressed/picker.js"></script>
-    <script type="text/javascript" src="vendors/js/datepicker/compressed/picker.date.js"></script>
-    <script type="text/javascript" src="vendors/js/datepicker/compressed/picker.time.js"></script>
+<!--
+        Parse.initialize("WqVzj2bWMfQpQ8cKpBCW7O7d6gaz3qZj8NPPOwb5", "4YxIU03f5axBJ8cJige5ENSFIzXIsJ7Gee5hNmtY");
+-->
+    <script src="https://checkout.stripe.com/checkout.js"></script>
     <script type="text/javascript" src="resources/js/script.js"></script>
     <script type='text/x-handlebars-template' id='carclub-single-service'>
+        <li>
+            <a href="#" class="service-link member">
+                <input type="hidden" id="objectID" value='{{ objectId }}'>
+                <i class='ion-android-{{ serviceStatus }}'></i>
+                <div class="service-link">
+                    <h3>{{ carClubType }}</h3>
+                    <h6>Client: <span>{{ clientID }}</span></h6> <h6>Pickup Time <span id="pickupTime">{{ pickupTime }}</span></h6> <h6>Location <span>{{ pickupAddress }}</span></h6><h6>Estimate duration: <span>{{ estimateDuration }}</span></h6>
+                </div>
+            </a>
+        </li>
+    </script>
+    <script type='text/x-handlebars-template' id='car-hire-single'>
+        <li>
+            <a href="#" class="service-link">
+                <input type="hidden" id="objectID" value='{{ objectId }}'>
+                <i class='ion-android-{{ hireStatus }}'></i>
+                <div class="service-link">
+                    <h3>{{ carClubType }}</h3>
+                    <h6>Dropoff time: <span id="startTime">{{ startTime }}</span></h6> <h6>Pickup time: <span id="endTime">{{ endTime }}</span></h6> </h6> <h6>Dropoff/Pickup Location: <span>{{ pickupDropoffAddress }}</span></h6>
+                </div>
+            </a>
+        </li>
+    </script>
+    <script type='text/x-handlebars-template' id='cab-single-service'>
         <li>
             <a href="#" class="service-link">
                 <input type="hidden" id="objectID" value='{{ objectId }}'>
                 <i class='ion-android-{{ serviceStatus }}'></i>
                 <div class="service-link">
-                    <h6>Pick up <span>{{ clientID }}</span> at <span id="pickupTime">{{ pickupTime }}</span> in <span>{{ pickupAddress }}</span></h6>
-                    <p>Estimate time <span>{{ estimateDuration }}</span></p>
+                    <h6>Pickup time: <span id="pickupTime" class="pickupTime">{{ pickupTime }}</span></h6> <h6>Pickup at: <span>{{ pickupAddress }}</span></h6> <h6>Estimate ride duration: <span>{{ estimateDuration }}</span></h6>
                 </div>
             </a>
         </li>
     </script>
-
 </body>
 </html>

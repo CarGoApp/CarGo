@@ -41,7 +41,7 @@ header nav a {
     line-height: 50px;
     color: #fff;
     background-color: #505050;
-    margin: 0 auto;
+    margin: 0 0 0 auto;
     border: 1px solid #eaeaea;
     border-radius: 50%;
 }
@@ -60,6 +60,7 @@ header nav a {
     display: block;
     width: calc(100%-10%);
     max-width: 500px;
+    min-width: 400px;
     height: 100vh;
     padding: 0 5%;
     margin: 0 auto;
@@ -163,6 +164,10 @@ p {
     font-size: 100%;
     line-height: 35px;
     border: 0;
+}
+
+.invalidTxt {
+    background-color: #ffb0b0;
 }
 
 .input-element input[type=text]:focus ~ label, .input-element input[type=password]:focus ~ label {
@@ -345,38 +350,44 @@ p {
     margin-bottom: 20px;
 }
 
-.list-services li {
+.list-bookings li, .list-services li {
     display: block;
     margin: 10px 0;
     font-size: 80%;
     border-bottom: 1px solid #c0c0c0;
 }
 
-.list-services li a {
+.list-bookings li a, .list-services li a {
     display: block;
     width: 100%;
     color: #505050;
+    text-decoration: none;
 }
 
-.list-services i {
+.list-bookings i, .list-services i {
     display: inline-block;
     font-size: 200%;
     vertical-align: top;
     margin-right: 5px;
+    width: 50px;
 }
 
-.list-services li div {
+.list-bookings li div, .list-services li div {
+    display: inline-block;
+    width: calc( 100% - 60px);
+    margin: 0;
+    padding: 0;
+}
+
+.list-bookings li h6, .list-services li h6 {
     display: inline-block;
 }
 
-.list-services li h6 {
-}
-
-.list-services li span {
+.list-bookings li span, .list-services li span, .list-services li h3 {
     font-weight: 400;
 }
 
-.list-services li p {
+.list-bookings li p, .list-services li p {
 }
 
 .list-services li p span {
@@ -455,4 +466,115 @@ p {
     font-size: 70%;
     font-weight: 300;
     margin-bottom: 5px;
+}
+
+.blackOverlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.calendarLayer {
+    display: block;
+    position: relative;
+    text-align: center;
+    top: 50%;
+    transform: translateY( -50% );
+    background-color: #fff;
+    width: 80%;
+    margin: 0 auto;
+    z-index: 11;
+}
+
+/* CALENDAR STYLE */
+.dh-calendar {
+    display: block;
+    border: 1px solid transparent;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.dh-week {
+    display: block;
+    width: 100%;
+    margin: 2px 0;
+}
+
+.dh-day {
+    display: inline-block;
+    width: 12%;
+    margin: 0;
+    padding: 0;
+    line-height: 200%;
+    border: 1px solid #eaeaea;
+    text-align: center;
+}
+
+.dh-day-completed {
+    background-color: #a7a7a7;
+}
+
+.noBorder {
+    border-color: transparent;
+}
+
+#sl {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.dh-dayfill {
+    border: 1px solid #ececec;
+    cursor: hand;
+    cursor: pointer;
+}
+
+.dh-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 12;
+}
+
+.dh-dialog {
+    display: block;
+    position: relative;
+    text-align: center;
+    background-color: #fff;
+    width: 80%;
+    margin: 0 auto;
+    z-index: 13;
+    padding: 15px;
+    top: 50%;
+    transform: translateY( -50% );
+}
+
+.dh-dialog {
+    padding-bottom: 35px;
+}
+
+.dh-row {
+    display: inline-block;
+    width: 100%;
+    height: 34px;
+}
+
+.sliderNumber {
+    display: inline-block;
+    border: 0;
+}
+
+.sliderNumberLabel {
+    display: inline-block;
+    margin: 0 5px;
 }
