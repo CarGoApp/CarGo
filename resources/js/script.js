@@ -318,6 +318,9 @@ var CarGo = {
                 case 'Logout':
                     me.logout();
                 break;
+                case 'TFF':
+                    me.signupMemberDetails();
+                break;
             }
         });
     },
@@ -703,12 +706,13 @@ var CarGo = {
                     <div class='icon-section'>\
                         <i class='ion-pie-graph big-icon'></i>\
                     </div>\
-                    <div class='title-section'>\
-                        <h3>Accrued Amount</h3>\
+                    <div class='amount-section'>\
+                        <h4>Accrued</h4>\
+                        <h3 id='accrued-amount'>£0.00</h3>\
                     </div>\
                     <div class='amount-section'>\
                         <h4>This month</h4>\
-                        <h3 id='accrued-ammount'>£450.00</h3>\
+                        <h3 id='this-month-amount'>£0.00</h3>\
                     </div>\
                 </div>\
             </div>\
@@ -717,15 +721,90 @@ You must commit to the times you have agreed to in order to continue being a Car
             <a href='#' class='button full-button'>Finish</a>\
         </div>\
         ");
+        var User = Parse.Object.extend( "_User" );
+        var queryUser = new Parse.Query( User );
+
+        queryUser.equalTo( "email", sessionStorage.emailID );
+        queryUser.first({
+            success:function( res ){
+                var res2 = res.toJSON();
+                var pp = res2.profilePicture;
+                console.log( pp.url );
+                $( ".driver-card img" ).attr( 'src', pp.url );
+//                $( ".driver-card img" ).attr( 'src', pp.url );
+                $( "#driver-name" ).text( res2.fullname );
+                $( "#driver-address" ).text( res2.address );
+                $( "#driver-phone" ).text( res2.phonenumber );
+            }
+        });
+
+        var accrued = 0;
+        var toPay = 0;
         var Hire = Parse.Object.extend( "CarHire" );
         var query = new Parse.Query( Hire );
 
         query.equalTo( "ownerID", sessionStorage.emailID );
         query.equalTo( "hireStatus", "done" );
+        query.equalTo( "paymentStatus", "processing" );
         query.descending( "createdAt" );
         query.find({
             success:function( results ){
+                $( results ).each(function( i, e ){
+                    var a = e.toJSON();
+                    toPay += 2000;
+                    accrued = toPay;
+                });
+                $( "#accrued-amount" ).text( "£" + ( accrued/100 ) );
+                var Cab = Parse.Object.extend( "CabServices" );
+                var queryCab = new Parse.Query( Cab );
 
+                queryCab.equalTo( "driverID", sessionStorage.emailID );
+                queryCab.equalTo( "serviceStatus", "done" );
+                queryCab.equalTo( "paymentStatus", "processing" );
+                queryCab.descending( "createdAt" );
+                queryCab.find({
+                    success:function( results2 ){
+                        $( results2 ).each(function( i2, e2 ){
+                            var a2 = e2.toJSON();
+                            toPay += ( a2.fare * 0.25 );
+                            accrued = toPay;
+                            });
+                        var Hire2 = Parse.Object.extend( "CarHire" );
+                        var query2 = new Parse.Query( Hire );
+                        query2.equalTo( "ownerID", sessionStorage.emailID );
+                        query2.equalTo( "hireStatus", "done" );
+                        query2.equalTo( "paymentStatus", "done" );
+                        query2.descending( "createdAt" );
+                        query2.find({
+                            success:function( results ){
+                                $( results ).each(function( i, e ){
+                                    var a = e.toJSON();
+                                    accrued += 2000;
+                                });
+                                $( "#accrued-amount" ).text( "£" + ( accrued/100 ) );
+                //                console.log( "Total: " + ( accrued / 100 ) );
+                                var Cab2 = Parse.Object.extend( "CabServices" );
+                                var queryCab2 = new Parse.Query( Cab );
+
+                                queryCab2.equalTo( "driverID", sessionStorage.emailID );
+                                queryCab2.equalTo( "serviceStatus", "done" );
+                                queryCab2.equalTo( "paymentStatus", "done" );
+                                queryCab2.descending( "createdAt" );
+                                queryCab2.find({
+                                    success:function( results2 ){
+                                        $( results2 ).each(function( i2, e2 ){
+                                            var a2 = e2.toJSON();
+                                            accrued += ( a2.fare * 0.25) ;
+                        //                    console.log( a2.fare );
+                                        });
+                                        $( "#accrued-amount" ).text( "£" + ( accrued  / 100 ) );
+                                        $( "#this-month-amount" ).text( "£" + ( toPay  / 100 ) );
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
             }
         });
     },
@@ -735,6 +814,19 @@ You must commit to the times you have agreed to in order to continue being a Car
         $( '.screen' ).html("\
         <div class='verticalcenter'>\
             <p> Personal Details </p>\
+            <div id='picture' style='display: none;'>\
+            </div>\
+            <img id='profile'>\
+            <img id='license'>\
+            <canvas id='secondImage' style='display: block'> </canvas>\
+            <a href='#' class='button full-button camera-button-profile'> Profile Photo </a>\
+            <a href='#' style='display: none;' class='button ghost-button camera-button-profile-take'> Take Photo </a>\
+            <a href='#' style='display: none;' class='button full-button camera-button-profile-ok'> Accept </a>\
+<h2 class='profile-correct'> <i class='ion-android-checkbox-outline'> </i> Profile Picture </h2>\
+            <a href='#' class='button full-button camera-button-id'> Drivers License </a>\
+            <a href='#' style='display: none;' class='button ghost-button camera-button-id-take'> Take Photo </a>\
+            <a href='#' style='display: none;' class='button full-button camera-button-id-ok'> Accept </a>\
+<h2 class='id-correct'> <i class='ion-android-checkbox-outline'> </i> Drivers License </h2>\
             <form class='input-form'>\
                 <div class='input-row'>\
                     <span class='input-element'>\
@@ -778,6 +870,106 @@ You must commit to the times you have agreed to in order to continue being a Car
             }
             me.validateForm( $( this ).val(), $( this ).attr( 'id' ), type );
         });
+        var b64profile;
+        var nameprofile;
+        var b64id;
+        var nameid;
+
+        $( '.camera-button-profile' ).click( function(){
+            Webcam.set({
+                width: 320,
+                height: 240,
+                dest_width: 640,
+                dest_height: 480,
+                crop_width: 480,
+                crop_height: 480,
+                image_format: 'jpeg',
+                jpeg_quality: 75,
+                flip_horiz: true,
+                fps: 45
+            });
+//SHOWS WEBCAM TAKES SNAPSHOT AND UPLOADS TO PARSE!!!!
+            $( '#picture' ).css( 'display', 'block' );
+            $( '#secondImage' ).css( 'display', 'none' );
+            $( "#profile" ).css( 'display', 'none' );
+            $( "#picture" ).css( 'width', 320 );
+            $( "#picture" ).css( 'display', 'block' );
+            $( "#picture" ).css( 'margin', '10px auto 0' );
+            Webcam.attach( "#picture" );
+            var canv = document.getElementById('secondImage');
+            var ctx = canv.getContext('2d');
+            $( '.camera-button-profile-take' ).css( 'display', 'block' );
+            $( this ).css( 'display', 'none' );
+        });
+        $( ".camera-button-profile-take" ).click( function(){
+            Webcam.snap( function(data_uri, canvas, context) {
+                $( '#picture' ).css( 'display', 'none' );
+                $( '#secondImage' ).css( 'display', 'none' );
+                $( "#profile" ).attr( 'src', data_uri );
+                $( "#profile" ).css( 'width', 320 );
+                $( "#profile" ).css( 'display', 'block' );
+                $( "#profile" ).css( 'margin', '10px auto 0' );
+                data_uri.replace(/^data:image\/(png|jpeg);base64,/, "");
+                b64profile = data_uri.substr( (data_uri.indexOf(',')+1), ( data_uri.length - data_uri.indexOf( ',' ) ) );
+                nameprofile = sessionStorage.emailID.substr( 0, sessionStorage.emailID.indexOf( '@' ) ) + '-profilePicture.jpg';
+            });
+            Webcam.reset();
+            $( '.camera-button-profile-ok' ).css( 'display', 'block' );
+            $( this ).css( 'display', 'none' );
+
+        });
+        $( '.camera-button-profile-ok' ).click( function(){
+            $( '.profile-correct' ).css( 'display', 'block' );
+            $( this ).css( 'display', 'none' );
+            $( '#profile' ).css( 'display', 'none' );
+        });
+        $( '.camera-button-id' ).click( function(){
+            Webcam.set({
+                width: 320,
+                height: 240,
+                dest_width: 640,
+                dest_height: 480,
+                crop_width: 640,
+                crop_height: 480,
+                image_format: 'jpeg',
+                jpeg_quality: 75,
+                flip_horiz: true,
+                fps: 45
+            });
+//SHOWS WEBCAM TAKES SNAPSHOT AND UPLOADS TO PARSE!!!!
+            $( '#picture' ).css( 'display', 'block' );
+            $( '#secondImage' ).css( 'display', 'none' );
+            $( "#profile" ).css( 'display', 'none' );
+            $( "#picture" ).css( 'width', 320 );
+            $( "#picture" ).css( 'display', 'block' );
+            $( "#picture" ).css( 'margin', '10px auto 0' );
+            Webcam.attach( "#picture" );
+            var canv = document.getElementById('secondImage');
+            var ctx = canv.getContext('2d');
+            $( '.camera-button-id-take' ).css( 'display', 'block' );
+            $( this ).css( 'display', 'none' );
+        });
+        $( ".camera-button-id-take" ).click( function(){
+            Webcam.snap( function(data_uri, canvas, context) {
+                $( '#picture' ).css( 'display', 'none' );
+                $( '#secondImage' ).css( 'display', 'none' );
+                $( "#profile" ).attr( 'src', data_uri );
+                $( "#profile" ).css( 'width', 320 );
+                $( "#profile" ).css( 'display', 'block' );
+                $( "#profile" ).css( 'margin', '10px auto 0' );
+                data_uri.replace(/^data:image\/(png|jpeg);base64,/, "");
+                b64id = data_uri.substr( (data_uri.indexOf(',')+1), ( data_uri.length - data_uri.indexOf( ',' ) ) );
+                nameid = sessionStorage.emailID.substr( 0, sessionStorage.emailID.indexOf( '@' ) ) + '-IDPicture.jpg';
+            });
+            Webcam.reset();
+            $( '.camera-button-id-ok' ).css( 'display', 'block' );
+            $( this ).css( 'display', 'none' );
+        });
+        $( '.camera-button-id-ok' ).click( function(){
+            $( '.id-correct' ).css( 'display', 'block' );
+            $( this ).css( 'display', 'none' );
+            $( '#profile' ).css( 'display', 'none' );
+        });
         $( ".button" ).click( function(){
             var user = Parse.Object.extend( "_User" );
             var query = new Parse.Query( user );
@@ -792,11 +984,15 @@ You must commit to the times you have agreed to in order to continue being a Car
             }
             query.equalTo( 'email', sessionStorage.emailID )
             query.first().then(function( data ){
+                var profileFile = new Parse.File( nameprofile, {base64: b64profile}, 'image/jpg' );
+                var idFile = new Parse.File( nameid, {base64: b64id}, 'image/jpg' );
                 data.set( 'fullname', fname );
                 data.set( 'phonenumber', pnumber );
                 data.set( 'address', haddress );
                 data.set( 'carclub', carclub );
                 data.set( 'postcode', postcode );
+                data.set( 'profilePicture', profileFile );
+                data.set( 'driverLicense', idFile );
                 data.save();
                 sessionStorage.carClub = carclub;
                 if( sessionStorage.newMember == "Yes" ){
@@ -816,10 +1012,6 @@ You must commit to the times you have agreed to in order to continue being a Car
         var screenContents = "\
         <div class='verticalcenter'>\
             <form class='car-details-input-form'>\
-                <a href='#' class='button camera-button'>\
-                    <i class='ion-android-camera'></i>\
-                    <p><i class='ion-card icon-not-yet'></i> Drivers license</p>\
-                </a>\
         ";
         if( cc == "Yes" ) {
             screenContents += "\
@@ -873,7 +1065,6 @@ You must commit to the times you have agreed to in order to continue being a Car
             me.validateForm( $( this ).val(), $( this ).attr( 'id' ), type );
         });
         $( ".button" ).click(function(){
-            console.log( 'Got here!' );
 
             var Car = Parse.Object.extend("Car");
             var car = new Car;
@@ -1377,6 +1568,7 @@ fare
                                         distance += e[0].legs[i].distance.value;
                                     }
 //                                    console.log(this.time + " " + this.distance);
+
                                     var fare = distance * 0.000621371;
                                     fare = fare.toFixed(2);
                                     $("#location-screen-fare").html("£" + fare);
@@ -1766,6 +1958,74 @@ fare
             } );
 
         }, 1000 );
+    },
+    tfftest:function(){
+        $( ".screen" ).empty;
+        var me = this;
+        $( '.screen' ).html("\
+        <div class='verticalcenter'>\
+            <div id='picture' style='display: block;'>\
+            </div>\
+            <canvas id='secondImage' style='display: block'> </canvas>\
+            <a href='#' class='button full-button'> Take snapshot </a>\
+            <a href='#' class='button button2 full-button button2'> Stop snapshot </a>\
+        </div>\
+        ");
+        Webcam.set({
+            width: 320,
+            height: 240,
+            dest_width: 640,
+            dest_height: 480,
+            image_format: 'jpeg',
+            jpeg_quality: 75,
+            flip_horiz: true,
+            fps: 45
+        });
+//SHOWS WEBCAM TAKES SNAPSHOT AND UPLOADS TO PARSE!!!!
+        Webcam.attach( "#picture" );
+        var canv = document.getElementById('secondImage');
+        var ctx = canv.getContext('2d');
+
+        $( ".button" ).click( function(){
+            Webcam.snap( function(data_uri, canvas, context) {
+                data_uri.replace(/^data:image\/(png|jpeg);base64,/, "");
+                var b64 = data_uri.substr( (data_uri.indexOf(',')+1), ( data_uri.length - data_uri.indexOf( ',' ) ) );
+                console.log( 'data_uri: '+data_uri.length+' - index:'+data_uri.indexOf(','));
+                console.log( b64 );
+                var name = 'pp.jpg';
+                var parseFile = new Parse.File( name, {base64: b64}, 'image/jpg' );
+                parseFile.save().then( function(){
+                    var User = new Parse.Object.extend( "_User" );
+                    var query = new Parse.Query( User );
+                    query.equalTo( 'email', sessionStorage.emailID );
+                    query.first(function( res ){
+                        res.set( 'profilePicture', parseFile );
+                        res.save();
+                    });
+                });
+//                Webcam.reset();
+            } );
+        });
+/*
+// WORKING FARES!!!
+        var e = "http://api.taxifarefinder.com/fare?key=fretEwrex4bU&entity_handle=London&origin=51.5217209,-0.1127467&destination=51.5145085,-0.1334171";
+//        var data = "key=fretEwrex4bU&entity_handle=London&origin=51.5158198,-0.1368244&destination=51.5092906,-0.0306312";
+        var data = "key=fretEwrex4bU&origin=51.5217209,-0.1127467&destination=51.5145085,-0.1334171&entity_handle=London";
+        var a = $.ajax({
+            dataType: "jsonp",
+            cache: "true",
+            url: "http://api.taxifarefinder.com/fare",
+            data: data,
+            success:function(){
+                console.log( this.url );
+            }
+        });
+
+        a.done(function( info ){
+            console.log( info.total_fare );
+        });
+        console.log( a );
+*/
     }
 };
 

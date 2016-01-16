@@ -202,17 +202,33 @@ p {
     border: 1px solid #212121;
     border-radius: 50%;
     width: 100px;
+    height: 100px;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow-x: hidden;
 }
 
 .driver-card .driver-info {
     display: inline-block;
-    width: 65%;
+    width: calc( 100% - 120px );
     vertical-align: top;
     line-height: 33px;
 }
 
+.driver-card .driver-info i {
+    font-size: 200%;
+    display: inline-block;
+    width: 20%;
+    text-align: center;
+}
+
 .driver-card .driver-info h3 {
     font-weight: 400;
+    line-height: 200%;
+    display: inline-block;
+    width: 80%;
+    vertical-align: top;
 }
 
 .driver-card .driver-info h4{
@@ -420,6 +436,7 @@ p {
     display: inline-block;
     width: 20%;
     font-size: 300%;
+    text-align: center;
 }
 
 .accrued-amount .title-section {
@@ -440,6 +457,7 @@ p {
     width: 35%;
     vertical-align: top;
     margin-top: 7px;
+    text-align: center;
 }
 
 .accrued-amount .amount-section h4 {
@@ -451,6 +469,7 @@ p {
 .accrued-amount .amount-section h3 {
     margin-top: 5px;
     font-size: 150%;
+    font-weight: 400;
 }
 
 .driver-list-earnings-screen p span {
@@ -577,4 +596,15 @@ p {
 .sliderNumberLabel {
     display: inline-block;
     margin: 0 5px;
+}
+
+.profile-correct, .id-correct {
+    display: none;
+    font-size: 100%;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.profile-correct i, .id-correct i {
+    color: green;
 }
