@@ -25,9 +25,9 @@ body {
 
 header nav {
     display: block;
-    width: 100%;
-    position: absolute;
+    position: fixed;
     bottom: 0;
+    right: calc( 50% - 25px);
     z-index: 1000;
 }
 
@@ -65,6 +65,7 @@ header nav a {
     padding: 0 5%;
     margin: 0 auto;
     background-color: #f2f2f2;
+    padding-bottom: 50px;
 }
 
 .verticalcenter {

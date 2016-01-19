@@ -153,6 +153,8 @@ var CarGo = {
                 <p>We only take people to and from places. We never run a cab service, just a new way of moving people around with cars.</p>\
             </div>\
         ");
+        localStorage.clear();
+        sessionStorage.clear();
         $( '.screen' ).attr( 'id', 'welcome-screen' );
         $( ".button" ).click(function(){
             $( ".screen" ).empty;
@@ -201,7 +203,6 @@ var CarGo = {
             var user = Parse.User;
             var us = Parse.Object.extend( "User" );
             var query = new Parse.Query( us );
-
             user.logIn( emailID, pass, {
                 success:function( user ) {
                     if( typeof( Storage ) !== "undefined" ) {
@@ -210,13 +211,13 @@ var CarGo = {
                         sessionStorage.sessionID = sessionID.toString( CryptoJS.enc.Hex );
                         sessionStorage.emailID = emailID;
                         sessionStorage.newMember = "No";
-//                        console.log( "About to check" );
-                        me.newLogLocation();
+
                         query.equalTo( "email", sessionStorage.emailID );
                         query.first({
                             success:function( u ){
                                 console.log( u.toJSON() );
                                 sessionStorage.fullname = u.toJSON().fullname;
+                                sessionStorage.personalData = u.toJSON().personalData;
                             },
                             error:function( error ){
                                 console.log( error.message );
@@ -808,11 +809,12 @@ You must commit to the times you have agreed to in order to continue being a Car
             }
         });
     },
-    signupMemberDetails:function( type ) {
+    signupMemberDetails:function( type, flow ) {
         $( ".screen" ).empty;
         var me = this;
-        $( '.screen' ).html("\
-        <div class='verticalcenter'>\
+        var content = "";
+//        $( '.screen' ).html("\
+        content = "<div class='verticalcenter'>\
             <p> Personal Details </p>\
             <div id='picture' style='display: none;'>\
             </div>\
@@ -846,7 +848,7 @@ You must commit to the times you have agreed to in order to continue being a Car
                         <label for='postcode'>Post Code</label>\
                     </span>\
                 </div>\
-                <div class='input-row'>\
+                <div class='input-row chkbox-container'>\
                     <div class='side-by-side-small'>\
                         <div class='chkbox'>\
                             <input type='checkbox' value='yes' id='chkboxInput' name='chkboxInput'>\
@@ -857,10 +859,14 @@ You must commit to the times you have agreed to in order to continue being a Car
                         <p>I want to join CarClub.</p>\
                     </div>\
                 </div>\
-                <a href='#' class='button full-button js--signup-member-details-button'>Save</a>\
+            <a href='#' class='button full-button js--signup-member-details-button'>Save</a>\
             </form>\
-        ");
+        ";
+        $( '.screen' ).html( content );
         $( '.screen' ).attr( 'id', '' );
+        if( flow == 1 ) {
+            $( ".chkbox-container" ).css( 'display', 'none' );
+        }
         $( 'input' ).keyup( function(){
             var type = "";
             if( $( this ).attr( 'name' ) == "email" ) {
@@ -970,7 +976,7 @@ You must commit to the times you have agreed to in order to continue being a Car
             $( this ).css( 'display', 'none' );
             $( '#profile' ).css( 'display', 'none' );
         });
-        $( ".button" ).click( function(){
+        $( ".js--signup-member-details-button" ).click( function(){
             var user = Parse.Object.extend( "_User" );
             var query = new Parse.Query( user );
             var fname = $("#full-name").val();
@@ -993,16 +999,32 @@ You must commit to the times you have agreed to in order to continue being a Car
                 data.set( 'postcode', postcode );
                 data.set( 'profilePicture', profileFile );
                 data.set( 'driverLicense', idFile );
+                data.set( 'personalData', 'complete' );
                 data.save();
                 sessionStorage.carClub = carclub;
-                if( sessionStorage.newMember == "Yes" ){
-                    sessionStorage.newMember = "No";
-                    if( carclub == "Yes" ) {
+                if( flow == 1 ){
+                    me.carHire();
+                } else {
+                    if( carclub == 'Yes' ){
                         me.signupMemberCarDetails( carclub );
                     } else {
                         me.loginType();
                     }
                 }
+/*
+                if( sessionStorage.newMember == "Yes" ){
+                    sessionStorage.newMember = "No";
+                    if( carclub == "Yes" ) {
+                        me.signupMemberCarDetails( carclub );
+                    } else {
+                        if( flow == 1) {
+                            me.carHire();
+                        } else {
+                            me.loginType();
+                        }
+                    }
+                }
+*/
             });
         });
     },
@@ -1112,7 +1134,22 @@ You must commit to the times you have agreed to in order to continue being a Car
         $( ".button" ).click(function(){
             switch( $( this ).text() ){
                 case 'Hire':
-                    me.carHire();
+                        var user = Parse.Object.extend( "_User" );
+                        var query = new Parse.Query( user );
+
+                        query.equalTo( 'email', sessionStorage.emailID )
+                        query.first().then(function( data ){
+                            $( data ).each( function(i, e){
+                                var p = e.toJSON();
+                                console.log( p.personalData );
+                                if( p.personalData == "empty" ) {
+                                    me.signupMemberDetails( '', 1 );
+                                } else {
+                                    me.carHire();
+                                    console.log( "There is data!" );
+                                }
+                            });
+                        });
                 break;
                 case 'View scheduled hires':
                     me.carHireList();
@@ -1400,6 +1437,7 @@ You must commit to the times you have agreed to in order to continue being a Car
                         jsonString = {"clientID":clientID, "startTime":startTime, "endTime":endTime, "hireStatus":hireStatus, "pickupDropoffLocation": pickupDropoffLocation, "pickupDropoffAddress":pickupDropoffAddress, "fare":me.fare};
                         console.log(jsonString);
                         me.payWithCard( 'hire', jsonString );
+                        me.loginType();
                     }
                 }
             });
@@ -1434,12 +1472,6 @@ You must commit to the times you have agreed to in order to continue being a Car
                 <form class='car-details-input-form'>\
                     <div class='input-row'>\
                         <span class='input-element'>\
-                            <input id='pickupTime' class='datepicker' name='date' type='text' autofocuss placeholder='Pickup time' data-valuee='2015-12-22T20:00:37.163Z'>\
-                            <label for='pickup'>Pickup time</label>\
-                        </span>\
-                    </div>\
-                    <div class='input-row'>\
-                        <span class='input-element'>\
                             <input type='text' name='pickup-location' id='pickup-location' placeholder='Pickup location'>\
                             <label for='pickup'>Pickup location</label>\
                         </span>\
@@ -1452,6 +1484,18 @@ You must commit to the times you have agreed to in order to continue being a Car
                     </div>\
                     <div class='input-row'>\
                         <div id='mapPlanTrip'></div>\
+                    </div>\
+                    <div class='input-row'>\
+                        <span class='input-element'>\
+                            <input id='pickupTime' class='datepicker' name='date' type='text' autofocuss placeholder='Pickup time' data-valuee='2015-12-22T20:00:37.163Z'>\
+                            <label for='pickup'>Pickup time</label>\
+                        </span>\
+                    </div>\
+                    <div class='input-row'>\
+                        <span class='input-element'>\
+                            <input id='returnTime' class='datepicker' name='date' type='text' autofocuss placeholder='Return time' data-valuee='2015-12-22T20:00:37.163Z'>\
+                            <label for='pickup'>Return time</label>\
+                        </span>\
                     </div>\
                     <p>Fare:</p>\
                     <h2 id='location-screen-fare'>£XX.XX</h2>\
@@ -1471,6 +1515,7 @@ clientID
 serviceStatus
 fare
 */
+            $( '#dropoff-location' ).trigger( 'focus' );
             var a = $.parseJSON( jsonString );
 
             var pula = "";
@@ -1479,9 +1524,10 @@ fare
 
             pula = '{"lat":' + a.lata + ',"lng":' + a.lnga + '}';
             pulb = '{"lat":' + a.latb + ',"lng":' + a.lngb + '}';
-            jsonString = {"estimateDuration":Math.round(a.estimateDuration/60), "estimateDistance":a.estimateDistance, "pickupTime":JSON.stringify( jsonString2), "pickupLocation":pula, "dropoffLocation":pulb, "clientID":a.clientID, "serviceStatus":a.serviceStatus, "fare":a.fare, "pickupAddress":a.pickupAddress, "dropoffAddress":a.dropoffAddress};
+            jsonString = {"estimateDuration":Math.round(a.estimateDuration/60), "estimateDistance":a.estimateDistance, "pickupTime":JSON.stringify( jsonString2), "returnTime":JSON.stringify( jsonString3), "pickupLocation":pula, "dropoffLocation":pulb, "clientID":a.clientID, "serviceStatus":a.serviceStatus, "fare":a.fare, "pickupAddress":a.pickupAddress, "dropoffAddress":a.dropoffAddress};
             console.log(jsonString);
             me.payWithCard( 'cab', jsonString );
+            me.loginType();
         });
         $( "#pickup-location" ).focusout( function(){
             GMaps.geocode({
@@ -1515,19 +1561,26 @@ fare
                                         time += e[0].legs[i].duration.value;
                                         distance += e[0].legs[i].distance.value;
                                     }
+                                    var mile = 1609.344;
+                                    var distmiles = distance / mile;
+                                    var fare;
+                                    if( distmiles <= 12) {
+                                        fare = 15;
+                                    } else {
+                                        if( distmiles <= 20) {
+                                            fare = 30;
+                                        } else {
+                                            if( distmiles <= 25) {
+                                                fare = 50;
+                                            }
+                                        }
+                                    }
 //                                    console.log(time + " " + distance);
-                                    var fare = distance * 0.000621371;
-                                    fare = fare.toFixed(2);
+//                                    var fare = distance * 0.000621371;
+//                                    fare = fare.toFixed(2);
                                     $("#location-screen-fare").html("£" + fare);
-                                    jsonString = '{ "estimateDuration":' + time + ', "estimateDistance":' + distance + ', "pickupTime":"' + $( '#pickupTime' ).attr( 'data-valuee' ) + '", "lata":' + lata + ', "lnga":' + lnga + ', "latb":' + latb + ', "lngb":' + lngb + ', "clientID":"' + sessionStorage.emailID + '", "serviceStatus":"time", "fare":' + fare + ', "pickupAddress":"' + $('#pickup-location').val() + '", "dropoffAddress":"' + $('#dropoff-location').val() + '" }' ;
+                                    jsonString = '{ "estimateDuration":' + time + ', "estimateDistance":' + distance + ', "pickupTime":"' + $( '#pickupTime' ).attr( 'data-valuee' ) + '", "returnTime":"' + $( '#returnTime' ).attr( 'data-valuee' ) + '", "lata":' + lata + ', "lnga":' + lnga + ', "latb":' + latb + ', "lngb":' + lngb + ', "clientID":"' + sessionStorage.emailID + '", "serviceStatus":"time", "fare":' + fare + ', "pickupAddress":"' + $('#pickup-location').val() + '", "dropoffAddress":"' + $('#dropoff-location').val() + '" }' ;
                                     console.log(jsonString);
-/*           console.log( "Duration: " + time );
-            console.log( "Distance: " + distance );
-            console.log( "Pickup = [ Lat: " + lata + ", Lng: " + lnga + "]");
-            console.log( "Dropoff = [ Lat: " + latb + ", Lng: " + lngb + "]");
-            console.log( "ClientID: " + sessionStorage.emailID );
-            console.log( "Service Status: Pending" );*/
-//                                    console.log(fare);
                                 }
                             });
                         }
@@ -1568,13 +1621,26 @@ fare
                                         distance += e[0].legs[i].distance.value;
                                     }
 //                                    console.log(this.time + " " + this.distance);
-
-                                    var fare = distance * 0.000621371;
-                                    fare = fare.toFixed(2);
+                                    var mile = 1609.344;
+                                    var distmiles = distance / mile;
+                                    var fare;
+                                    if( distmiles <= 12) {
+                                        fare = 15;
+                                    } else {
+                                        if( distmiles <= 20) {
+                                            fare = 30;
+                                        } else {
+                                            if( distmiles <= 25) {
+                                                fare = 50;
+                                            }
+                                        }
+                                    }
+//                                    var fare = distance * 0.000621371;
+//                                    fare = fare.toFixed(2);
                                     $("#location-screen-fare").html("£" + fare);
-                                    jsonString = '{ "estimateDuration":' + time + ', "estimateDistance":' + distance + ', "pickupTime":"' + $( '#pickupTime' ).attr( 'data-valuee' ) + '", "lata":' + lata + ', "lnga":' + lnga + ', "latb":' + latb + ', "lngb":' + lngb + ', "clientID":"' + sessionStorage.emailID + '", "serviceStatus":"time", "fare":' + fare + ', "pickupAddress":"' + $('#pickup-location').val() + '", "dropoffAddress":"' + $('#dropoff-location').val() + '" }' ;
+                                    jsonString = '{ "estimateDuration":' + time + ', "estimateDistance":' + distance + ', "pickupTime":"' + $( '#pickupTime' ).attr( 'data-valuee' ) + '", "returnTime":"' + $( '#returnTime' ).attr( 'data-valuee' ) + '", "lata":' + lata + ', "lnga":' + lnga + ', "latb":' + latb + ', "lngb":' + lngb + ', "clientID":"' + sessionStorage.emailID + '", "serviceStatus":"time", "fare":' + fare + ', "pickupAddress":"' + $('#pickup-location').val() + '", "dropoffAddress":"' + $('#dropoff-location').val() + '" }' ;
 //                                    jsonString = '{ "estimateDuration":' + time + ', "estimateDistance":' + distance + ', "pickupTime":"' + $( '#pickupTime' ).attr( 'data-valuee' ) + '", "pickupLocation":"{' + lata + ', ' + lnga + '}", "dropoffLocation":"{' + latb + ', ' + lngb + '}", "clientID":"' + sessionStorage.emailID + '", "serviceStatus":"Pending", "fare":' + fare + ' }' ;
-                                    console.log(jsonString);
+//                                    console.log(jsonString);
 //                                    console.log(fare);
                                 }
                             });
@@ -1596,6 +1662,17 @@ fare
                     jsonString2 = e;
                     $( "#pickupTime" ).val( e.day + " " + months[e.month] + ", " + e.year + " - Pickup at " + e.hour + ":" + (e.minutes) );
                     $( "#pickupTime" ).attr( "data-valuee", jsonString2 );
+	     		});
+	     	});
+            $( "#blackOverlay" ).show();
+        });
+        $( "#returnTime" ).focus(function(){
+	     	$( function(){
+	     		dh_calendar_book_a_cab.ini( function( e ){
+//                    jsonString2 = JSON.stringify(e);
+                    jsonString3 = e;
+                    $( "#returnTime" ).val( e.day + " " + months[e.month] + ", " + e.year + " - Return at " + e.hour + ":" + (e.minutes) );
+                    $( "#returnTime" ).attr( "data-valuee", jsonString3 );
 	     		});
 	     	});
             $( "#blackOverlay" ).show();
@@ -1796,7 +1873,8 @@ fare
                 var serviceStatus = data.serviceStatus;
                 var fare = ( data.fare * 100 );
                 var pickupAddress = data.pickupAddress;
-                var dropoffAddress = data.dropoffAddress
+                var dropoffAddress = data.dropoffAddress;
+                var returnTime = data.returnTime;
             break;
             case 'hire':
                 var clientID = data.clientID;
@@ -1834,6 +1912,7 @@ fare
                                 query.set( 'fare', fare );
                                 query.set( 'pickupAddress', pickupAddress );
                                 query.set( 'dropoffAddress', dropoffAddress );
+                                query.set( 'returnTime', returnTime );
                                 query.set( 'chargeToken', chargeToken );
                                 query.save(null, {
                                     success:function(){
@@ -2030,6 +2109,233 @@ fare
 };
 
 var dh_calendar_book_a_cab = {
+    day : 0,
+    month : 0,
+    year : 0,
+    hour : 0,
+    minute : 0,
+    e : null,
+    ini : function( e ){
+        var me = this;
+        $( "body" ).append("\
+            <div class='blackOverlay'>\
+                <div class='calendarLayer'>\
+                </div>\
+            </div>\
+        ");
+
+        $( ".calendarLayer" ).html( '\
+            <div class="dh-calendar">\
+                <div class="dh-week">\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                </div>\
+                <div class="dh-week">\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                </div>\
+                <div class="dh-week">\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                </div>\
+                <div class="dh-week">\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                </div>\
+                <div class="dh-week">\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                </div>\
+                <div class="dh-week">\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                    <div class="dh-day noBorder"></div>\
+                </div>\
+            </div>\
+        ');
+        var semanas = $( ".dh-calendar .dh-week" );
+        var date = new Date();
+        me.year = date.getFullYear();
+        me.month = date.getMonth();
+        me.e = e;
+
+        //Obtenemos en que dia inicia el mes (d,l,m,m,j,v,s)
+        var diasXmes = [31,28,31,30,31,30,31,31,30,31,30,31];
+
+        if( date.getFullYear() % 4  == 0 ){
+            diasXmes[ 1 ] = 29;
+        }
+        var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
+        var primer_dia = parseInt( primerDia.getDay() );
+        var ultimo_dia = diasXmes[ date.getMonth() ];
+        var dia = 1;
+
+        semanas.each( function( i ){
+            var dias = $( this ).find( ".dh-day" );
+
+            dias.each( function( j ){
+                var txt_dia = '';
+                if( i == 0 ){
+                    if( j >= primer_dia ){
+                        txt_dia = dia;
+                        $( this ).html( txt_dia );
+                        dia++;
+                        $( this ).removeClass( "noBorder" );
+                        me.evt_click_day( $( this ) );
+                    }
+                }else{
+                    if( dia <= ultimo_dia ){
+                        txt_dia = dia;
+                        $( this ).html( txt_dia );
+                        dia++;
+                        $( this ).removeClass( "noBorder" );
+                        me.evt_click_day( $( this ) );
+                    }
+                }
+
+            });
+        });
+        $( ".dh-calendar" ).show();
+    },
+
+    evt_click_day : function( obj ){
+        var me = this;
+        var fecha = new Date();
+        obj.addClass( "dh-dayfill" );
+
+        obj.click( function(){
+            me.day = parseInt ( obj.text() );
+            if( me.day >= fecha.getDate() ){
+                me.date_options();
+            }
+        });
+
+    },
+
+    date_options : function(){
+        var me = this;
+        var fecha = new Date();
+        var _hora = fecha.getHours();
+        var _hora_ini = 0;
+        if( me.day > fecha.getDate() ){
+            _hora = 12;
+        }else{
+            _hora_ini = _hora;
+        }
+
+        var _hora_fin = _hora + 4;
+        var overlay = $( "<div/>" );
+        overlay.addClass( "dh-overlay" ).appendTo( ".blackOverlay" );
+
+        var dialog = $( "<div/>" ).addClass( "dh-dialog" ).appendTo( ".dh-overlay" );
+        dialog.show();
+
+        var fila1 = $( "<div/>" ).addClass( "dh-row" );
+        var fila3 = $( "<div/>" ).addClass( "dh-row" );
+        var fila4 = $( "<div/>" ).addClass( "dh-row" );
+        var fila5 = $( "<div/>" ).addClass( "dh-row" );
+        var fila6 = $( "<div/>" ).addClass( "dh-row" );
+        var slider = $( "<div/>" );
+        var s_time_lbl = $( "<label/>" ).addClass( "sliderNumberLabel" );
+        var min_time_lbl = $( "<label/>" ).addClass( "sliderNumberLabel" );
+        var s_time = $( "<span/>" ).addClass( "sliderNumber" );
+        var min_time = $( "<span/>" ).addClass( "sliderNumber" );
+        var slider2 = $( "<div/>" );
+        var btn_ok = $( "<a/>" ).addClass( "button" ).addClass( "full-button" ).text( "save" ).attr("href","#");
+
+        s_time_lbl.append( "Hour:" );
+        min_time_lbl.append( "Minutes:" );
+        fila1.append( s_time_lbl );
+        fila1.append( s_time );
+        fila1.appendTo( dialog );
+        fila4.append( min_time_lbl );
+        fila4.append( min_time );
+        fila3.appendTo( dialog );
+        fila4.appendTo( dialog );
+        fila5.appendTo( dialog );
+        btn_ok.appendTo( fila6 );
+        fila6.appendTo( dialog );
+
+        slider.attr( "id", "sl" );
+        slider.appendTo( fila3 );
+
+        slider2.attr( "id", "sl" );
+        slider2.appendTo( fila5 );
+
+        s_time.text( 0 );
+
+        slider.slider({
+                range: false,
+                min: 0,
+                max: 23,
+                slide: function( event, ui ) {
+                    s_time.text( ui.value );
+                }
+            }
+        );
+
+        min_time.text( 0 );
+        slider2.slider({
+                range: false,
+                min: 0,
+                max: 59,
+                step: 5,
+                slide: function( event, ui ) {
+                    min_time.text( ui.value );
+                }
+            }
+        );
+
+        btn_ok.click( function(){
+            var obj = {
+                "year": me.year,
+                "month": me.month,
+                "day": me.day,
+                "hour": parseInt( s_time.text() ),
+                "minutes": parseInt( min_time.text() )
+            };
+
+            me.e( obj );
+            dialog.fadeOut();
+            overlay.fadeOut(function(){
+                dialog.remove();
+                overlay.remove();
+                $( ".blackOverlay" ).remove();
+            });
+        });
+    }
+};
+
+var dh_calendar_book_a_cab_return = {
     day : 0,
     month : 0,
     year : 0,
@@ -2457,6 +2763,7 @@ var dh_calendar_hire_a_car = {
                 range: false,
                 min: 4,
                 max: 23,
+                step: 4,
                 slide: function( event, ui ) {
                     min_time.text( ui.value );
                 }
