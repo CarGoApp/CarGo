@@ -1386,14 +1386,21 @@ You must commit to the times you have agreed to in order to continue being a Car
         $( "#startTime" ).focus(function(){
 	     	$( function(){
 	     		dh_calendar_hire_a_car.ini( function( e ){
+                    var date = new Date();
                     jsonString = JSON.stringify(e);
                     $( "#startTime" ).val( e.day + " " + months[e.month] + ", " + e.year + " - Dropoff: " + e.hour + " hours" );
                     $( "#endTime" ).val( e.day + " " + months[e.month] + ", " + e.year + " - Pickup: " + (e.hour + e.hours) + " hours" );
                     $( "#startTime" ).attr( "data-valuee", jsonString );
                     if( e.hours >= 4 ){
-                        me.fare = 10;
-                        var extraHours = e.hours - 4;
-                        me.fare = me.fare + ( extraHours * 5 )
+                        me.fare = 30;
+                        if( e.hours >= 8 ){
+                            me.fare = 45;
+                            if( e.hours >= 12 ){
+                                me.fare = 60;
+                            }
+                        }
+//                        var extraHours = e.hours - 4;
+//                        me.fare = me.fare + ( extraHours * 5 )
                         $( "#location-screen-fare" ).text( me.fare );
                     }
 	     		});
@@ -1678,12 +1685,13 @@ fare
 	     		dh_calendar_book_a_cab.ini( function( e ){
 //                    jsonString2 = JSON.stringify(e);
                     jsonString2 = e;
-                    $( "#pickupTime" ).val( e.day + " " + months[e.month] + ", " + e.year + " - Pickup at " + e.hour + ":" + (e.minutes) );
+                    var da = new Date();
+                    $( "#pickupTime" ).val( da.getDay() + " " + months[da.getMonth()] + ", " + da.getFullYear() + " - Pickup at " + e.hour + ":" + (e.minutes) );
                     minute = e.minutes;
                     hour = e.hour;
-                    day = e.day;
-                    month = e.month;
-                    year = e.year;
+                    day = da.getDay;
+                    month = da.getMonth;
+                    year = da.getYear;
                     $( "#pickupTime" ).attr( "data-valuee", jsonString2 );
 	     		});
 	     	});
@@ -1694,7 +1702,13 @@ fare
 	     		dh_calendar_book_a_cab_return.ini( function( e ){
 //                    jsonString2 = JSON.stringify(e);
                     jsonString3 = e;
-                    $( "#returnTime" ).val( day + " " + months[month] + ", " + year + " - Return at " + e.hour + ":" + (e.minutes) );
+                    var da = new Date();
+                    $( "#returnTime" ).val( da.getDay() + " " + months[da.getMonth()] + ", " + da.getFullYear() + " - Return at " + e.hour + ":" + (e.minutes) );
+                    minute = e.minutes;
+                    hour = e.hour;
+                    day = da.getDay;
+                    month = da.getMonth;
+                    year = da.getYear;
                     $( "#returnTime" ).attr( "data-valuee", jsonString3 );
 	     		});
 	     	});
@@ -2131,7 +2145,7 @@ fare
     }
 };
 
-var dh_calendar_book_a_cab = {
+var dh_calendar_book_a_cab2 = {
     day : 0,
     month : 0,
     year : 0,
@@ -2321,7 +2335,12 @@ var dh_calendar_book_a_cab = {
                 min: 0,
                 max: 23,
                 slide: function( event, ui ) {
-                    s_time.text( ui.value );
+                    if( ui.value > 12 ) {
+                        s_time.text( (ui.value - 12) + "pm" );
+                    } else {
+                        s_time.text( ui.value + "am" );
+                    }
+//                    s_time.text( ui.value );
                 }
             }
         );
@@ -2348,6 +2367,116 @@ var dh_calendar_book_a_cab = {
             };
 
             me.e( obj );
+            dialog.fadeOut();
+            overlay.fadeOut(function(){
+                dialog.remove();
+                overlay.remove();
+                $( ".blackOverlay" ).remove();
+            });
+        });
+    }
+};
+
+var dh_calendar_book_a_cab = {
+    day : 0,
+    month : 0,
+    year : 0,
+    hour : 0,
+    minute : 0,
+    e : null,
+
+    ini : function( e ){
+        var me = this;
+        var fecha = new Date();
+        var _hora = fecha.getHours();
+        var _hora_ini = 0;
+        if( me.day > fecha.getDate() ){
+            _hora = 12;
+        }else{
+            _hora_ini = _hora;
+        }
+
+        var _hora_fin = _hora + 4;
+        $( "body" ).append("\
+            <div class='blackOverlay'>\
+                <div class='calendarLayer'>\
+                </div>\
+            </div>\
+        ");
+        var overlay = $( "<div/>" );
+        overlay.addClass( "dh-overlay" ).appendTo( ".blackOverlay" );
+
+        var dialog = $( "<div/>" ).addClass( "dh-dialog" ).appendTo( ".dh-overlay" );
+        dialog.show();
+
+        var fila1 = $( "<div/>" ).addClass( "dh-row" );
+        var fila3 = $( "<div/>" ).addClass( "dh-row" );
+        var fila4 = $( "<div/>" ).addClass( "dh-row" );
+        var fila5 = $( "<div/>" ).addClass( "dh-row" );
+        var fila6 = $( "<div/>" ).addClass( "dh-row" );
+        var slider = $( "<div/>" );
+        var s_time_lbl = $( "<label/>" ).addClass( "sliderNumberLabel" );
+        var min_time_lbl = $( "<label/>" ).addClass( "sliderNumberLabel" );
+        var s_time = $( "<span/>" ).addClass( "sliderNumber" );
+        var min_time = $( "<span/>" ).addClass( "sliderNumber" );
+        var slider2 = $( "<div/>" );
+        var btn_ok = $( "<a/>" ).addClass( "button" ).addClass( "full-button" ).text( "save" ).attr("href","#");
+
+        s_time_lbl.append( "Hour:" );
+        min_time_lbl.append( "Minutes:" );
+        fila1.append( s_time_lbl );
+        fila1.append( s_time );
+        fila1.appendTo( dialog );
+        fila4.append( min_time_lbl );
+        fila4.append( min_time );
+        fila3.appendTo( dialog );
+        fila4.appendTo( dialog );
+        fila5.appendTo( dialog );
+        btn_ok.appendTo( fila6 );
+        fila6.appendTo( dialog );
+
+        slider.attr( "id", "sl" );
+        slider.appendTo( fila3 );
+
+        slider2.attr( "id", "sl" );
+        slider2.appendTo( fila5 );
+
+        s_time.text( 0 );
+
+        slider.slider({
+                range: false,
+                min: hour,
+                max: 23,
+                slide: function( event, ui ) {
+                    if( ui.value > 12 ) {
+                        s_time.text( (ui.value - 12) + "pm" );
+                    } else {
+                        s_time.text( ui.value + "am" );
+                    }
+//                    s_time.text( ui.value );
+                }
+            }
+        );
+
+        min_time.text( 0 );
+        slider2.slider({
+                range: false,
+                min: minute,
+                max: 59,
+                step: 5,
+                slide: function( event, ui ) {
+                    min_time.text( ui.value );
+                }
+            }
+        );
+
+        btn_ok.click( function(){
+            var obj = {
+                "hour": parseInt( s_time.text() ),
+                "minutes": parseInt( min_time.text() )
+            };
+
+            e( obj );
             dialog.fadeOut();
             overlay.fadeOut(function(){
                 dialog.remove();
@@ -2429,7 +2558,12 @@ var dh_calendar_book_a_cab_return = {
                 min: hour,
                 max: 23,
                 slide: function( event, ui ) {
-                    s_time.text( ui.value );
+                    if( ui.value > 12 ) {
+                        s_time.text( (ui.value - 12) + "pm" );
+                    } else {
+                        s_time.text( ui.value + "am" );
+                    }
+//                    s_time.text( ui.value );
                 }
             }
         );
@@ -2654,7 +2788,12 @@ var dh_calendar_hire_a_car = {
                 min: 0,
                 max: 23,
                 slide: function( event, ui ) {
-                    s_time.text( ui.value );
+                    if( ui.value > 12 ) {
+                        s_time.text( (ui.value - 12) + "pm" );
+                    } else {
+                        s_time.text( ui.value + "am" );
+                    }
+//                    s_time.text( ui.value );
                 }
             }
         );
@@ -2663,7 +2802,7 @@ var dh_calendar_hire_a_car = {
         slider2.slider({
                 range: false,
                 min: 4,
-                max: 23,
+                max: 12,
                 step: 4,
                 slide: function( event, ui ) {
                     min_time.text( ui.value );
