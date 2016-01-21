@@ -15,6 +15,11 @@ var locationTimer;
 var nearCab;
 var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 var jsonLocation;
+var day;
+var month;
+var year;
+var minute;
+var hour;
 
 var CarGo = {
     validateFormElements:function() {
@@ -1497,13 +1502,25 @@ You must commit to the times you have agreed to in order to continue being a Car
                             <label for='pickup'>Return time</label>\
                         </span>\
                     </div>\
-                    <p>Fare:</p>\
-                    <h2 id='location-screen-fare'>£XX.XX</h2>\
-                    <a href='#' class='button full-button js--location-screen-save-button'>Save</a>\
+                    <div class='input-row'>\
+                        <span class='input-element'>\
+                            <input type='text' name='number' id='number' placeholder='Phone Number'>\
+                            <label for='number'>Phone Number</label>\
+                        </span>\
+                    </div>\
+                    <div class='input-row'>\
+                        <p>Fare:</p>\
+                        <h2 id='location-screen-fare'>£XX.XX</h2>\
+                        <p>Each cab booking secures a return trip to and from your desired destination at no extra cost</p>\
+                        <a href='#' class='button full-button js--location-screen-save-button'>Save</a>\
+                    </div>\
                 </form>\
             </div>\
         ");
         var jsoncString2 = "";
+        $( '#number' ).keyup(function(){
+            me.validateForm( $( this ).val(), $( this ).attr( 'id' ), 'number' );
+        });
         $( ".button" ).click(function(){
 /*
 estimateDuration
@@ -1515,7 +1532,7 @@ clientID
 serviceStatus
 fare
 */
-            $( '#dropoff-location' ).trigger( 'focus' );
+            $( '#dropoff-location' ).trigger( 'focusout' );
             var a = $.parseJSON( jsonString );
 
             var pula = "";
@@ -1524,7 +1541,7 @@ fare
 
             pula = '{"lat":' + a.lata + ',"lng":' + a.lnga + '}';
             pulb = '{"lat":' + a.latb + ',"lng":' + a.lngb + '}';
-            jsonString = {"estimateDuration":Math.round(a.estimateDuration/60), "estimateDistance":a.estimateDistance, "pickupTime":JSON.stringify( jsonString2), "returnTime":JSON.stringify( jsonString3), "pickupLocation":pula, "dropoffLocation":pulb, "clientID":a.clientID, "serviceStatus":a.serviceStatus, "fare":a.fare, "pickupAddress":a.pickupAddress, "dropoffAddress":a.dropoffAddress};
+            jsonString = {"estimateDuration":Math.round(a.estimateDuration/60), "estimateDistance":a.estimateDistance, "pickupTime":JSON.stringify( jsonString2), "returnTime":JSON.stringify( jsonString3), "pickupLocation":pula, "dropoffLocation":pulb, "clientID":a.clientID, "serviceStatus":a.serviceStatus, "fare":a.fare, "pickupAddress":a.pickupAddress, "dropoffAddress":a.dropoffAddress, "phonenumber":a.phonenumber};
             console.log(jsonString);
             me.payWithCard( 'cab', jsonString );
             me.loginType();
@@ -1579,7 +1596,7 @@ fare
 //                                    var fare = distance * 0.000621371;
 //                                    fare = fare.toFixed(2);
                                     $("#location-screen-fare").html("£" + fare);
-                                    jsonString = '{ "estimateDuration":' + time + ', "estimateDistance":' + distance + ', "pickupTime":"' + $( '#pickupTime' ).attr( 'data-valuee' ) + '", "returnTime":"' + $( '#returnTime' ).attr( 'data-valuee' ) + '", "lata":' + lata + ', "lnga":' + lnga + ', "latb":' + latb + ', "lngb":' + lngb + ', "clientID":"' + sessionStorage.emailID + '", "serviceStatus":"time", "fare":' + fare + ', "pickupAddress":"' + $('#pickup-location').val() + '", "dropoffAddress":"' + $('#dropoff-location').val() + '" }' ;
+                                    jsonString = '{ "estimateDuration":' + time + ', "estimateDistance":' + distance + ', "pickupTime":"' + $( '#pickupTime' ).attr( 'data-valuee' ) + '", "returnTime":"' + $( '#returnTime' ).attr( 'data-valuee' ) + '", "lata":' + lata + ', "lnga":' + lnga + ', "latb":' + latb + ', "lngb":' + lngb + ', "clientID":"' + sessionStorage.emailID + '", "serviceStatus":"time", "fare":' + fare + ', "pickupAddress":"' + $('#pickup-location').val() + '", "dropoffAddress":"' + $('#dropoff-location').val() + '", "phonenumber":'+$( "#number" ).val()+' }' ;
                                     console.log(jsonString);
                                 }
                             });
@@ -1638,7 +1655,7 @@ fare
 //                                    var fare = distance * 0.000621371;
 //                                    fare = fare.toFixed(2);
                                     $("#location-screen-fare").html("£" + fare);
-                                    jsonString = '{ "estimateDuration":' + time + ', "estimateDistance":' + distance + ', "pickupTime":"' + $( '#pickupTime' ).attr( 'data-valuee' ) + '", "returnTime":"' + $( '#returnTime' ).attr( 'data-valuee' ) + '", "lata":' + lata + ', "lnga":' + lnga + ', "latb":' + latb + ', "lngb":' + lngb + ', "clientID":"' + sessionStorage.emailID + '", "serviceStatus":"time", "fare":' + fare + ', "pickupAddress":"' + $('#pickup-location').val() + '", "dropoffAddress":"' + $('#dropoff-location').val() + '" }' ;
+                                    jsonString = '{ "estimateDuration":' + time + ', "estimateDistance":' + distance + ', "pickupTime":"' + $( '#pickupTime' ).attr( 'data-valuee' ) + '", "returnTime":"' + $( '#returnTime' ).attr( 'data-valuee' ) + '", "lata":' + lata + ', "lnga":' + lnga + ', "latb":' + latb + ', "lngb":' + lngb + ', "clientID":"' + sessionStorage.emailID + '", "serviceStatus":"time", "fare":' + fare + ', "pickupAddress":"' + $('#pickup-location').val() + '", "dropoffAddress":"' + $('#dropoff-location').val() + '", "phonenumber":'+$( "#number" ).val()+' }' ;
 //                                    jsonString = '{ "estimateDuration":' + time + ', "estimateDistance":' + distance + ', "pickupTime":"' + $( '#pickupTime' ).attr( 'data-valuee' ) + '", "pickupLocation":"{' + lata + ', ' + lnga + '}", "dropoffLocation":"{' + latb + ', ' + lngb + '}", "clientID":"' + sessionStorage.emailID + '", "serviceStatus":"Pending", "fare":' + fare + ' }' ;
 //                                    console.log(jsonString);
 //                                    console.log(fare);
@@ -1655,12 +1672,18 @@ fare
             lat: 51.5002918,
             lng: -0.1206113
         });
+
         $( "#pickupTime" ).focus(function(){
 	     	$( function(){
 	     		dh_calendar_book_a_cab.ini( function( e ){
 //                    jsonString2 = JSON.stringify(e);
                     jsonString2 = e;
                     $( "#pickupTime" ).val( e.day + " " + months[e.month] + ", " + e.year + " - Pickup at " + e.hour + ":" + (e.minutes) );
+                    minute = e.minutes;
+                    hour = e.hour;
+                    day = e.day;
+                    month = e.month;
+                    year = e.year;
                     $( "#pickupTime" ).attr( "data-valuee", jsonString2 );
 	     		});
 	     	});
@@ -1668,10 +1691,10 @@ fare
         });
         $( "#returnTime" ).focus(function(){
 	     	$( function(){
-	     		dh_calendar_book_a_cab.ini( function( e ){
+	     		dh_calendar_book_a_cab_return.ini( function( e ){
 //                    jsonString2 = JSON.stringify(e);
                     jsonString3 = e;
-                    $( "#returnTime" ).val( e.day + " " + months[e.month] + ", " + e.year + " - Return at " + e.hour + ":" + (e.minutes) );
+                    $( "#returnTime" ).val( day + " " + months[month] + ", " + year + " - Return at " + e.hour + ":" + (e.minutes) );
                     $( "#returnTime" ).attr( "data-valuee", jsonString3 );
 	     		});
 	     	});
@@ -2342,133 +2365,8 @@ var dh_calendar_book_a_cab_return = {
     hour : 0,
     minute : 0,
     e : null,
+
     ini : function( e ){
-        var me = this;
-        $( "body" ).append("\
-            <div class='blackOverlay'>\
-                <div class='calendarLayer'>\
-                </div>\
-            </div>\
-        ");
-
-        $( ".calendarLayer" ).html( '\
-            <div class="dh-calendar">\
-                <div class="dh-week">\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                </div>\
-                <div class="dh-week">\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                </div>\
-                <div class="dh-week">\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                </div>\
-                <div class="dh-week">\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                </div>\
-                <div class="dh-week">\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                </div>\
-                <div class="dh-week">\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                    <div class="dh-day noBorder"></div>\
-                </div>\
-            </div>\
-        ');
-        var semanas = $( ".dh-calendar .dh-week" );
-        var date = new Date();
-        me.year = date.getFullYear();
-        me.month = date.getMonth();
-        me.e = e;
-
-        //Obtenemos en que dia inicia el mes (d,l,m,m,j,v,s)
-        var diasXmes = [31,28,31,30,31,30,31,31,30,31,30,31];
-
-        if( date.getFullYear() % 4  == 0 ){
-            diasXmes[ 1 ] = 29;
-        }
-        var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
-        var primer_dia = parseInt( primerDia.getDay() );
-        var ultimo_dia = diasXmes[ date.getMonth() ];
-        var dia = 1;
-
-        semanas.each( function( i ){
-            var dias = $( this ).find( ".dh-day" );
-
-            dias.each( function( j ){
-                var txt_dia = '';
-                if( i == 0 ){
-                    if( j >= primer_dia ){
-                        txt_dia = dia;
-                        $( this ).html( txt_dia );
-                        dia++;
-                        $( this ).removeClass( "noBorder" );
-                        me.evt_click_day( $( this ) );
-                    }
-                }else{
-                    if( dia <= ultimo_dia ){
-                        txt_dia = dia;
-                        $( this ).html( txt_dia );
-                        dia++;
-                        $( this ).removeClass( "noBorder" );
-                        me.evt_click_day( $( this ) );
-                    }
-                }
-
-            });
-        });
-        $( ".dh-calendar" ).show();
-    },
-
-    evt_click_day : function( obj ){
-        var me = this;
-        var fecha = new Date();
-        obj.addClass( "dh-dayfill" );
-
-        obj.click( function(){
-            me.day = parseInt ( obj.text() );
-            if( me.day >= fecha.getDate() ){
-                me.date_options();
-            }
-        });
-
-    },
-
-    date_options : function(){
         var me = this;
         var fecha = new Date();
         var _hora = fecha.getHours();
@@ -2480,6 +2378,12 @@ var dh_calendar_book_a_cab_return = {
         }
 
         var _hora_fin = _hora + 4;
+        $( "body" ).append("\
+            <div class='blackOverlay'>\
+                <div class='calendarLayer'>\
+                </div>\
+            </div>\
+        ");
         var overlay = $( "<div/>" );
         overlay.addClass( "dh-overlay" ).appendTo( ".blackOverlay" );
 
@@ -2522,7 +2426,7 @@ var dh_calendar_book_a_cab_return = {
 
         slider.slider({
                 range: false,
-                min: 0,
+                min: hour,
                 max: 23,
                 slide: function( event, ui ) {
                     s_time.text( ui.value );
@@ -2533,7 +2437,7 @@ var dh_calendar_book_a_cab_return = {
         min_time.text( 0 );
         slider2.slider({
                 range: false,
-                min: 0,
+                min: minute,
                 max: 59,
                 step: 5,
                 slide: function( event, ui ) {
@@ -2544,14 +2448,11 @@ var dh_calendar_book_a_cab_return = {
 
         btn_ok.click( function(){
             var obj = {
-                "year": me.year,
-                "month": me.month,
-                "day": me.day,
                 "hour": parseInt( s_time.text() ),
                 "minutes": parseInt( min_time.text() )
             };
 
-            me.e( obj );
+            e( obj );
             dialog.fadeOut();
             overlay.fadeOut(function(){
                 dialog.remove();
